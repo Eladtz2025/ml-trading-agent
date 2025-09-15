@@ -1,0 +1,68 @@
+meta:
+  version: "1.0.0"
+  created_utc: "2025-09-15T10:18:37Z"
+  owner: "Eladtz2025"
+  goal: "Elite ML trading system; OOS Sharpe >= 1.5; research/paper first"
+kpis:
+  trading: ["CAGR","Sharpe","Sortino","MaxDD","HitRate","Turnover"]
+  engineering:
+    ci_minutes_max: 5
+    tests_required: true
+    reproducible: true
+checklist:
+  foundation:
+    status: not_started
+    next_action: "Create repo + CI skeleton (pytest/ruff/mypy) and README"
+    notes: "Docker (optional), CLI YAML setup"
+  data:
+    status: not_started
+    next_action: "Yahoo/Tiingo adapter + cache; splits/dividends; anomaly checks; survivorship control"
+    notes: "EOD OHLCV standardization; Parquet"
+  features:
+    status: not_started
+    next_action: "RSI, MACD, ATR; OBV, VWAP; regime indicator (HMM)"
+    notes: ""
+  labeling:
+    status: not_started
+    next_action: "Next-bar direction + triple-barrier (Lopez de Prado); parameter grid; tests"
+    notes: ""
+  models:
+    status: not_started
+    next_action: "XGBoost wrapper + Optuna HPO; save model.pkl + params.json; SHAP explainability"
+    notes: "LSTM/TCN optional later"
+  backtest:
+    status: not_started
+    next_action: "Simulator with costs/latency (next-bar open); metrics table; trade log + equity curve"
+    notes: ""
+  validation:
+    status: not_started
+    next_action: "Purged walk-forward; leakage checks; bootstrap/MC; cross-validation charts; save eval_metrics.json"
+    notes: ""
+  risk:
+    status: not_started
+    next_action: "Max drawdown/exposure; vol-target or fractional Kelly; correlation caps; limits.yaml"
+    notes: "Kill-switch on drawdown"
+  reports:
+    status: not_started
+    next_action: "HTML/PDF report; SHAP summary; Monte Carlo + bootstrap; plots"
+    notes: ""
+  monitor:
+    status: not_started
+    next_action: "PSI/KS tests train/test/live; alerts (drift/drawdown/sharp decline); retrain triggers"
+    notes: ""
+  compliance:
+    status: not_started
+    next_action: "compliance.md (research-only, SEC/ESMA overview); disclaimers; audit logs"
+    notes: ""
+  infra:
+    status: not_started
+    next_action: "Docker; CI/CD; golden files; CLI YAML; config hash logging"
+    notes: ""
+  decisions:
+    status: not_started
+    next_action: "Create decisions.md (ADRs) and update per merge"
+    notes: ""
+  packs:
+    status: not_started
+    next_action: "List future Feature/Model packs and selection criteria"
+    notes: ""
