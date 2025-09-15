@@ -1,5 +1,5 @@
 FROM python:3.11
-WORKDDIR /app
+WORKDIR /app
 COPY . /app
 COPY . /ui
 
