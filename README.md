@@ -1,7 +1,20 @@
-# ML Trading Agent
+# ML Trading Agent - Code Base
 
-Project to build an advanced, rig-awaire, and production-ready trading agent with complete tracking, validation, and risk management.
+Project to design a professional, reproducible, and risk-controlled machine learning agent for stock market trading.
+```text
+core:
+- leakage-free validation (no lookahead)
+- data quality and anomaly detection
+- triple-barrier labeling (Calderon framework)
+- multi-model composition
+- risk budget with explicit entry and exit
+- metrics like Sharpe, Sortino, Calmar
+- stress testing and live environment
+tools:
+- Docker with golden files
+- CI/CD
+- integrated reporting, visualization, and alerting
+```
 
-Please see 'checklist.md' and the architecture image for a visual overview.
-
-Contributors: Elad T., 2025.
+To be continued...
+- Documentation files will live under_cannas_ for interactive modelling.
