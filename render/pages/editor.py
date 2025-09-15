@@ -3,7 +3,7 @@ import pandas as pd
 from render.state import load_data, load_model
 from backtest.engine import run_backtest
 
-st.title("Pá Editor")
+st.title("Editor")
 st.write("Create, edit, and save strategies and model configurations.")
 
 symbol = st.text_input("Symbol", value="SPY")
