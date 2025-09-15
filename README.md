@@ -1,20 +1,21 @@
-# ML Trading Agent - Code Base
+# ML Trading Agent
 
-Project to design a professional, reproducible, and risk-controlled machine learning agent for stock market trading.
-```text
-core:
-- leakage-free validation (no lookahead)
-- data quality and anomaly detection
-- triple-barrier labeling (Calderon framework)
-- multi-model composition
-- risk budget with explicit entry and exit
-- metrics like Sharpe, Sortino, Calmar
-- stress testing and live environment
-tools:
-- Docker with golden files
-- CI/CD
-- integrated reporting, visualization, and alerting
-```
+Elite MM-trading system with realistic execution, validation, and risk modeling.
 
-To be continued...
-- Documentation files will live under_cannas_ for interactive modelling.
+- PCA: Python 3.11, pure.js, portable code
+- ClEan structure: data -> features -> labels -> models -> backtest
+- Cli_Tool: run-ready flow from `config.yaml`; artifacts in `./artifacts`.
+
+## Structure
+
+- `data/` - OHLCV adapters (download, cache)
+- features/ - rolling features
+- labeling/ - target generation
+- models/ - train/predict/save
+- backtest/ - time-based simulation with costs/latency
+- risk/ - position sizing, constraints
+- reports/ - EQuity curves, trade list, sharpe metrics
+
+- infra/ - configs, cli, Docker
+## Status
+Research-mode; not live yet
