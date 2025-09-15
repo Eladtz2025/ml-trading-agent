@@ -1,19 +1,7 @@
-supersetup
-requests
-ipython
-lightgbm
-html5
-Dashe
-
-mlVoops
-shap
-scany
-scheduler
-
-borutalis
+streamlit
+plotly
 pandas
-linterprete
-weeklyn
-gitpthooks
-# Taliborts for FU and UI
-../agxency.my_cu.wheel
+xgboost
+scikit-learn
+yfinance
+joblib
