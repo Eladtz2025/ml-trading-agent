@@ -1,3 +1,3 @@
 import streamlit as st
-st.title("🔂 Artifact Browser")
-st.write("���פי וכה "LTML", אסש קי 'joblib', רוה כורון
+st.title("П÷■┌ Artifact Browser")
+st.write("ЕД╤ив╓в≥ в∙в⌡в■ "LTML", в░в║в╘ в╖в≥ 'joblib', в╗в∙в■ в⌡в∙в╗в∙в÷
