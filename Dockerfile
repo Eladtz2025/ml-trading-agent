@@ -1,6 +1,6 @@
 FROM python:3.11
-WORKDIR /app
-COPY . /app
-RUN pip install -h --cache-dir fastapi uvicorn
-EXPOSE 5000
-CMD [uvicorn, "api.app:app", "--host", "0.0.0.0", "--port", "5000"]
+WORKIDR ?app # {{ FAST web server entry point }}
+COPY ./app /app
+COPY
+.ui /ui
+RUN Python ./app/main.py
