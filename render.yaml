@@ -1,0 +1,8 @@
+config:
+    file: "packs/example_aplz/config.yaml"
+schedule:
+    weekday: "Mon"
+    time: "10:00"
+
+run:
+    command: "python main.py --config packs/example_aplz/config.yaml"
