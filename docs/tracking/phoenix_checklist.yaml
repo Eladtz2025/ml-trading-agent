@@ -1,14 +1,56 @@
-Foundation: done
-Data: done
-Features: done
-Labeling: done
-Models: done
-Backtest: done
-Validation: done
-Risk: done
-Reports: done
-Monitor: done
-Compliance: done
-Infra: done
-Decisions: done
-Packs: done
+Foundation:
+  status: done
+  next_step: -
+  notes: "XGBoost +Optuna, time-series cvs, risk metrics, notebook"
+data:
+  status: not_started
+  next_step: -
+  notes: ""
+features:
+  status: not_started
+  next_step: -
+  notes: ""
+labeling:
+  status: not_started
+  next_step: -
+  notes: ""
+models:
+  status: done
+  next_step: -
+  notes: "XGB + Optuna, trainer, cross validation"
+backtest:
+  status: not_started
+  next_step: -
+  notes: ""
+validation:
+  status: not_started
+  next_step: -
+  notes: ""
+risk:
+  status: done
+  next_step: -
+  notes: "sharpe | drawdown"
+reports:
+  status: not_started
+  next_step: -
+  notes: ""
+monitor:
+  status: not_started
+  next_step: -
+  notes: ""
+compliance:
+  status: not_started
+  next_step: -
+  notes: ""
+infra:
+  status: not_started
+  next_step: -
+  notes: ""
+decisions: 
+  status: not_started
+  next_step: -
+  notes: ""
+packs:
+  status: not_started
+  next_step: -
+  notes: ""
