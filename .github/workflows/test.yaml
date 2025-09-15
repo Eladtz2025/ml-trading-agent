@@ -1,0 +1,11 @@
+name: run-tests
+
+excute-as:
+  github:
+    branches: [main]
+
+job:
+    test:
+      runs: |
+          - name: Run validation tests
+            run: pytest tests/test_validation.py
