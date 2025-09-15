@@ -1,0 +1,9 @@
+symbol: APLZ
+start: 2022-01-01
+end: 2023-01-01
+tf_mp: daily
+filters: RSI 14
+labels: next_bar
+xmodel: xgb_cls
+risk: constant
+output: hitrate_pnl.csv
