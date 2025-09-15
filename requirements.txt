@@ -1,0 +1,19 @@
+supersetup
+requests
+ipython
+lightgbm
+html5
+Dashe
+
+mlVoops
+shap
+scany
+scheduler
+
+borutalis
+pandas
+linterprete
+weeklyn
+gitpthooks
+# Taliborts for FU and UI
+../agxency.my_cu.wheel
