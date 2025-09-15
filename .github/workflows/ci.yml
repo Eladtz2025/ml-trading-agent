@@ -1,0 +1,11 @@
+name: CI (ML Trading Agent)
+
+an:
+  - name: Setup
+    run: ruff
+
+  - name: Type Check
+    run: mypy module .
+
+  - name: Tests
+    run: python -m pytest

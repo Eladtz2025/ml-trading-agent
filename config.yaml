@@ -1,0 +1,11 @@
+reut: run
+symbols: [
+  APLZ,
+  "WOOIL_UK"
+]
+timeframe: daily
+backtest:
+  return_type: next-bar
+  entry_level: 400
+  exit_level: -400
+  max_duration: 50
