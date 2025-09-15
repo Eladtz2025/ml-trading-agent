@@ -1,3 +1,3 @@
 import streamlit as st
-st.title("💐 Dashboard")
-st.write("איי ידרו , drawdown, �>�ן טאצוב ור ל׫")
+st.title("🔔 Dashboard")
+st.write("Real-time overview of predictions, actions, and performance.")
