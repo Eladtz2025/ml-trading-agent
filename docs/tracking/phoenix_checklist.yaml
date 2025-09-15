@@ -1,56 +1,55 @@
 Foundation:
   status: done
-  next_step: -
-  notes: "XGBoost +Optuna, time-series cvs, risk metrics, notebook"
-data:
-  status: not_started
-  next_step: -
-  notes: ""
-features:
-  status: not_started
-  next_step: -
-  notes: ""
-labeling:
-  status: not_started
-  next_step: -
-  notes: ""
-models:
+  next_step: "Document dependencies in candle [checklist]"
+Data:
+  status: in_progress
+  next_step: "Extend support to more sources and add parquet/cache tracking"
+ notes: "Alpha Vantage implemented; no anomaly detection yet."
+Features:
+  status: in_progress
+  next_step: "Add regimes and more technicals"
+  notes:: "Simple indicators exist, but no regimes implemented."
+Labeling:
   status: done
-  next_step: -
-  notes: "XGB + Optuna, trainer, cross validation"
-backtest:
-  status: not_started
-  next_step: -
-  notes: ""
-validation:
-  status: not_started
-  next_step: -
-  notes: ""
-risk:
+  next_step: "Review default configs so frames are in sync"
+  notes:: "Hoth next-bar and triple-barrier implemented."
+Models:
   status: done
-  next_step: -
-  notes: "sharpe | drawdown"
-reports:
+  next_step: "Torch models if needed, otherwise XXGB"
+  notes:: "Clean Interface is in place; xgz plug ready."
+Backtest:
+  status: in_progress
+  next_step: "Verify simulator latency and slippage fills correctly"
+ notes: "Engine ready, but latency modeling needs improvement."
+Validation:
+  status: in_progress
+  next_step: "Add tests for leakage and purged ksfold"
+ notes: "Simple cross_val.py present, but no linked to backtest."
+Risk:
+  status: done
+  next_step: "Auto-sizing is present with Limits and Drawdown rules"
+ notes: "Wall covered."
+Reports:
+  status: in_progress
+  next_step: "Generate plots and summaries beyond gen.py"
+  notes: "No GU based on reports yet."
+Monitor:
+  status: done
+  next_step: "Connect alerts to drift and model activity"
+ notes: "PSI/KS checks implemented."
+Compliance:
+  status: in_progress
+  next_step: "Add regulatory disclaimers document"
+  notes: "Audit/logger exist, but no policy defaulet."
+Infra:
+  status: done
+  next_step: "Review CI and Docker Files"
+  notes:: "Docker and runtime config are in place."
+Decisions: 
   status: not_started
-  next_step: -
-  notes: ""
-monitor:
-  status: not_started
-  next_step: -
-  notes: ""
-compliance:
-  status: not_started
-  next_step: -
-  notes: ""
-infra:
-  status: not_started
-  next_step: -
-  notes: ""
-decisions: 
-  status: not_started
-  next_step: -
-  notes: ""
-packs:
-  status: not_started
-  next_step: -
-  notes: ""
+  next_step: "Create docs/decisions/ or packages directory"
+ notes: "No documented decisions or STC records"
+Packs:
+  status: in_progress
+  next_step: "Validate loop packs in packs/snapshot.py"
+  notes: "Example subject exists, but no tests or models attached.
