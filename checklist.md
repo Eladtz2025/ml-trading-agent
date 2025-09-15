@@ -1,28 +1,51 @@
-# ML Trading Agent - Checklist
+# ML Trading Agent - Checklist V1
 
-Timeline: 3D-4W development of MlTrader_Agent minimum V1 (MVP)
+Version: 0.1
 
-- [ ] Shriks / configure trading git
-| __
-- [ ] Define architecture modules /`architecture.png`
-- [ ] Setup CiCD / init git-actions
-- [ ] Add ReadME + log mechó (public) description
-- [ ] Create 'checklist.md' version 1.0
+## Schema vitalizats
 
-- [ ] `data/`: init rawn-data dashboard, schema, validation pipelines
-- [ ] `features/`: calculate features (RLSI, MacD, vol ratios)
-- [ ] `models/`: machine learning models (XWGB or LI3/TCN)
-- [ ] `backtest/`: backtest logic with commission-sizing, cost, sharpe/drowdown
-- [ ] `monitoring/`: draft/apply drift/retrain triggers
-- [ ] `reports/`: Shap/LIME, MC simulations, visual views
+** Architectura telmetid(/architecture.png )
+** Docker +ICD cii +logs +global repo)
+** ReadME +checklist
+** Paper's mode before live
 
-- [ ] [_future] GPU optimization, discrete agents, RL
+## Pass: Starter
 
-- [ ] Setup Docker base env
+- X `requirements.txt` + `Dockerfile`
+- X architecture / `infra/ data/` /`features/` /``models/`
+~ ...
+`monitoring/ reports/
+``tests_hub` for ci/cr
 
-- [ ] Implement Ci-SD Testing with 80% coverage
+## Phase I: Data + Features
 
-- [ ] Paper trading mode via alp%aca, verification module
-| __
-- [ ] Share via configs log/view
-- [ ] Post-MN retrieval reports
+- X mangas loaders + validators
+
+- X cleaners + simulated holes +fixers on cleaning
+- X feature extraction + technicals + autocated shaps 
+- X loggers + explainability
+
+## Phase II: Model Training
+
+- X learners - XGBoost, LISTS, TCN
+
+- X cross-validation + ParamGrid
+~ Triple-barrier labeling + test set
+- X hanycoded grid via
+- X seeling with confidence
+
+## Phase III: Rendering + Simulation
+- X sharpe/drawDown calmar
+- X simulated stress events
+- X PHSP +KS thresholds + detection running
+~ Locking-detection, REG, RLB
+
+## Phase IV: Paper/Pruduction
+- X exposed models via api
+- X validated alpha vs reference
+- X monitored drift + retrain triggers
+
+## Phase V: Expansions
+- X regime-detection + compliance check
+- X Sentiment + Macro features
+- X multi-asset trading
