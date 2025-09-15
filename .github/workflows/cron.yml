@@ -1,0 +1,7 @@
+name: run_daily_pipeline
+
+on
+  cron: '0 0 * * '*'
+
+jiob:
+  run: python main.py --config packs/retrain.yaml
