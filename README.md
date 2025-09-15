@@ -1,2 +1,7 @@
-# ml-trading-agent
-Elite ML-based trading agent with rigorous risk, validation, and execution realism.
+# ML Trading Agent
+
+Project to build an advanced, rig-awaire, and production-ready trading agent with complete tracking, validation, and risk management.
+
+Please see 'checklist.md' and the architecture image for a visual overview.
+
+Contributors: Elad T., 2025.
