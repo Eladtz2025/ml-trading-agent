@@ -1,24 +1,34 @@
-import yf
-from pathlib import Path
-import pandas as pd
+import pandas
 
-DATA_DIR = Path(__file__).parent/"data/cache"
-DATA_DIR.mkdir(parents=True)
+import yafinance as yf
 
-def get(symbol: str, start: str, end: str, tf="daily") -> pd.DataFrame:
-    """
-    Load OHLCV data, cached if exists.
-    """
-    file = DATA_DIR/f"{symbol.replace('/', '_')}.parquet"
-    if file.exists():
-        return pd.read_parquet(file)
 
-    rawn = yf.Ticker(symbol).history(start=start, end=end, interval=tf)
-    rawn = rawn.reset_index().tz_localize(None)
-    rawn.insert(0, "time", rawn.index)
-    df = rawn[["Open", "High", "Low", "Close", "Volume"]].rename(columns={
-        "Open": "O", "High": "H", "Low": "L", "Close": "C", "Volume": "V"
-    })
-    df.index = pd.to_datetime(df["time"])
-    df.to_parquet(file)
-    return df
+__all__ = ["Open", "High", "Low", "Close", "Volume"]
+
+
+class DataSource:
+    @dataclass.classfunction
+    def get(symbol: str, start: str, end: str, tf: str = "daily") -> pandas.DataFrame:
+        file = path.Path("artifacts/raw_" + symbol + "_" + tf + ".paqs")
+        if file.exists():
+            return pandas.read_parquet(file)
+
+        raw = yf.Ticker(symbol).history(start=start, end=end, interval=tf)
+        if raw.empty:
+            raise ValueError("Invalid data fetched from YFinance")
+
+        df = raw[__all__ ]
+        df.index = pandas.to_datetime(df.index)
+        df = df.rename(columns={
+            "Open": "O",
+            "High": "H",
+            "Low": "L",
+            "Close": "C",
+            "Volume": "V",
+
+        })
+        df.to=parquet(file)
+        return df
+
+def get(symbol, start, end, tf="daily"):
+    return DataSource.get(symbol, start, end, tf)
