@@ -1,55 +1,56 @@
 Foundation:
   status: done
-  next_step: "Document dependencies in candle [checklist]"
+  next_step: none
+  notes: "Repo scanned. Architecture map verified"
 Data:
   status: in_progress
-  next_step: "Extend support to more sources and add parquet/cache tracking"
- notes: "Alpha Vantage implemented; no anomaly detection yet."
+  next_step: "Implement Parquet writers"
+  notes: "Alpha Vantage implemented; no anomaly detection, no splits/dividends tracked"
 Features:
   status: in_progress
-  next_step: "Add regimes and more technicals"
-  notes:: "Simple indicators exist, but no regimes implemented."
+  next_step: "Integrate OBV, VWAP, GAMM regims"
+  notes: "RSI, MACD, ATR- implemented. Needs KMMS"
 Labeling:
   status: done
-  next_step: "Review default configs so frames are in sync"
-  notes:: "Hoth next-bar and triple-barrier implemented."
+  next_step: "Validate validation methods to enforce barriers"
+  notes: "Next-bar, triple-barrier implemented"
 Models:
-  status: done
-  next_step: "Torch models if needed, otherwise XXGB"
-  notes:: "Clean Interface is in place; xgz plug ready."
+  status: in_progress
+  next_step: "Integrate SHAP, add challenger rules"
+  notes: "XXGB + OPTUNA implemented"
 Backtest:
   status: in_progress
-  next_step: "Verify simulator latency and slippage fills correctly"
- notes: "Engine ready, but latency modeling needs improvement."
+  next_step: "Support latency + slippage fills"
+  notes: "Semi-realistic fill modeling missing"
 Validation:
   status: in_progress
-  next_step: "Add tests for leakage and purged ksfold"
- notes: "Simple cross_val.py present, but no linked to backtest."
+  next_step: "Support link between back test and validators"
+  notes: "Purged walk_forward present, no full detection of leakage"
 Risk:
   status: done
-  next_step: "Auto-sizing is present with Limits and Drawdown rules"
- notes: "Wall covered."
+  next_step: null
+  notes: "Sizing, constraints, stops implemented according to Playbook"
 Reports:
   status: in_progress
-  next_step: "Generate plots and summaries beyond gen.py"
-  notes: "No GU based on reports yet."
+  next_step: "Render SHAP, STATS controls"
+  notes: "Gen.py exists, needs pdf/html export"
 Monitor:
   status: done
-  next_step: "Connect alerts to drift and model activity"
- notes: "PSI/KS checks implemented."
+  next_step: "Psi/ks detection, heartbeat"
+  notes: "Psi check implemented"
 Compliance:
-  status: in_progress
-  next_step: "Add regulatory disclaimers document"
-  notes: "Audit/logger exist, but no policy defaulet."
+  status: done
+  next_step: null
+  notes: "Regulational guidelines are documented"
 Infra:
   status: done
-  next_step: "Review CI and Docker Files"
-  notes:: "Docker and runtime config are in place."
-Decisions: 
-  status: not_started
-  next_step: "Create docs/decisions/ or packages directory"
- notes: "No documented decisions or STC records"
+  next_step: "CI + Docker in place"
+  notes: "Config yaml, pyproject.toml, tests/pytest"
+Decisions:
+  status: in_progress
+  next_step: "Consistent updates with changelog via codescan"
+  notes: "Root-cause traced -- no quick hacks"
 Packs:
   status: in_progress
-  next_step: "Validate loop packs in packs/snapshot.py"
-  notes: "Example subject exists, but no tests or models attached.
+  next_step: "Validate pack pipelines and models"
+  notes: "examples subject exist, but no models attached"
