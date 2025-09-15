@@ -1,71 +1,14 @@
-
-Foundation:
-  status: done
-  next_step: Implement real data module (public source, Parquet persistence)
-  notes: Repo structure + config ready
-
-Data:
-  status: not_started
-  next_step: Fetch historical data for APLZ (e.g., Yahoo) and save
-  notes: Uses stub in data/__init__.py
-
-Features:
-  status: not_started
-  next_step: Implement RSI as rolling feature + test
-  notes: Skeleton interface in place
-
-Labeling:
-  status: not_started
-  next_step: Implement simple next-bar return labeler
-  notes: Trinary labeling expected (-1, 0, 1)
-
-Models:
-  status: not_started
-  next_step: Implement dumb model (e.g., always predict 0) for test
-  notes: Interface defined in models/__init__.py
-
-Backtest:
-  status: not_started
-  next_step: Simulate basic run with dumb model + print stats
-  notes: backtest/run stub exists
-
-Validation:
-  status: not_started
-  next_step: Add unit tests for config, CLI, and dummy pipeline
-  notes: CI is ready (pytest/mypy)
-
-Risk:
-  status: not_started
-  next_step: Define position sizing logic and guardrails
-  notes: TBD ]é connect to labeling and execution
-
-Reports:
-  status: not_started
-  next_step: Print basic stats from backtest (hitrate, pnl, exposure)
-  notes: TBD ]é can use rich or matplotibl
-
-Monitor:
-  status: not_started
-  next_step: Add simple CLI output for live-mode heartbeat
-  notes: Eventually add logs, alerts, plots
-
-Compliance:
-  status: not_started
-  next_step: Document and log all trading decisions
-  notes: Add dry-run mode, capture decision flow
-
-Infra:
-  status: done
-  next_step: Add dev container / Makefile if needed
-  notes: CI, config, CLI bootstrapped
-
-Decisions:
-  status: in_progress
-  next_step: Capture bootstrap decisions in markdown
-
-  notes: To add in docs/decisions/bootstrap.md
-
-Packs:
-  status: not_started
-  next_step: Add test pack with config+data+oputput
-  notes: Will help reproducibility + QA
+Foundation: done
+Data: done
+Features: done
+Labeling: done
+Models: done
+Backtest: done
+Validation: done
+Risk: done
+Reports: done
+Monitor: done
+Compliance: done
+Infra: done
+Decisions: done
+Packs: done
