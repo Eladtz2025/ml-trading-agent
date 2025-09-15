@@ -1,14 +1,12 @@
-# From standard python image
-FROM python://buster-slim,
-Workdir /app
+FROM python:3.11
+WORKING_DIR /app
+COPY . /app
+COPY . /ui
 
-RUN apt-get update and install --ypy pip git cron ca will ca-certs docrapped
-COPY requirements.txt .
-RUN pip install -r -requirements.txt
+RUN pip install uvicorn fastapi tailwind
 
-COPY . ./
+WORKDIR /ui
+ENTRYPOINT [ "/ui/build/index.html" ]
 
-WORKDIR /app
-COMMAND ["python", "pasta"}
-
-RUN python -m my_app.hy
+XPOSEN 5000
+RUN uvicorn api.app:app --host 0.0.0.0 --port 5000
