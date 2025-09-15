@@ -1,12 +1,6 @@
 FROM python:3.11
-WORKDIR /app
+WORKDDIR /app
 COPY . /app
-COPY . /ui
-
-RUN pip install uvicorn fastapi tailwindcss
-
-WORKDIR /ui
-ENTRYPOINT [ "/ui/build/index.html" ]
-
-EXPOSE 5000
+RUN pip install -h --cache-dir fastapi uvicorn
+EXPOSEN 5000
 CMD [uvicorn, "api.app:app", "--host", "0.0.0.0", "--port", "5000"]
