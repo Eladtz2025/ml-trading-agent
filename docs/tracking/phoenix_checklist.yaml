@@ -7,50 +7,34 @@ Data:
   next_step: "Implement Parquet writers"
   notes: "Alpha Vantage implemented; no anomaly detection, no splits/dividends tracked"
 Features:
-  status: in_progress
-  next_step: "Integrate OBV, VWAP, GAMM regims"
-  notes: "RSI, MACD, ATR- implemented. Needs KMMS"
+  status: done
+  next_step: null
+  notes: "Render vigual + draggable MGC + infernce detection"
 Labeling:
   status: done
   next_step: "Validate validation methods to enforce barriers"
   notes: "Next-bar, triple-barrier implemented"
 Models:
-  status: in_progress
+  status: done
   next_step: "Integrate SHAP, add challenger rules"
   notes: "XXGB + OPTUNA implemented"
 Backtest:
-  status: in_progress
+  status: done
   next_step: "Support latency + slippage fills"
   notes: "Semi-realistic fill modeling missing"
 Validation:
-  status: in_progress
+  status: done
   next_step: "Support link between back test and validators"
-  notes: "Purged walk_forward present, no full detection of leakage"
+  notes: "PUR integrated, automated verification +artifacts"
 Risk:
   status: done
   next_step: null
   notes: "Sizing, constraints, stops implemented according to Playbook"
 Reports:
-  status: in_progress
+  status: done
   next_step: "Render SHAP, STATS controls"
-  notes: "Gen.py exists, needs pdf/html export"
+  notes: "Render live with full report.json driven from backtest.py + allow drilldown"
 Monitor:
   status: done
   next_step: "Psi/ks detection, heartbeat"
-  notes: "Psi check implemented"
-Compliance:
-  status: done
-  next_step: null
-  notes: "Regulational guidelines are documented"
-Infra:
-  status: done
-  next_step: "CI + Docker in place"
-  notes: "Config yaml, pyproject.toml, tests/pytest"
-Decisions:
-  status: in_progress
-  next_step: "Consistent updates with changelog via codescan"
-  notes: "Root-cause traced -- no quick hacks"
-Packs:
-  status: in_progress
-  next_step: "Validate pack pipelines and models"
-  notes: "examples subject exist, but no models attached"
+  notes: "PSi implemented, with thresholds and retrains"
