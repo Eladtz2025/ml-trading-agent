@@ -1,3 +1,3 @@
 import streamlit as st
-st.title("📗 Monitor & Drift")
-st.write("ארו ביל ונרב ר יית (PSI), לוו "asserts", alerts, טאתוב׭יאי לל)")
+st.title("MONITOR & DRIFT - Basic Version")
+st.write("No real time time drift metrics, ALERT mechanism and risk reports. This will be added soon.")
