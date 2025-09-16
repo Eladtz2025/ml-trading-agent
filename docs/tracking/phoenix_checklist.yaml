@@ -1,40 +1,67 @@
 Foundation:
   status: done
-  next_step: none
-  notes: "Repo scanned. Architecture map verified"
-Data:
-  status: in_progress
-  next_step: "Implement Parquet writers"
-  notes: "Alpha Vantage implemented; no anomaly detection, no splits/dividends tracked"
+  next_step: "ינאחא דהץהה ReADSME md blau kaym"
+  notes: 'ררוטייומ להן
+ Data:
+  status: not_started
+  next_step: "Ìביוב PARQUET { splits, dividends } wrapper"
+  notes: "المريد ייומ להן", "checklist: build_checklist.md"
 Features:
   status: done
-  next_step: null
-  notes: "Render vigual + draggable MGC + infernce detection"
+  next_step: "test under different configs"   
+  notes: "atr, macd, rsi implemented"
+
 Labeling:
   status: done
-  next_step: "Validate validation methods to enforce barriers"
-  notes: "Next-bar, triple-barrier implemented"
+  next_step: "validate with config"
+  notes: "next_bar, and triple_barrier are clear"
+
 Models:
-  status: done
-  next_step: "Integrate SHAP, add challenger rules"
-  notes: "XXGB + OPTUNA implemented"
+  status: in_progress
+  next_step: "views validation and serialization"
+  notes: "dummy + XGBoost + Optuna +interface.py"
+
 Backtest:
   status: done
-  next_step: "Support latency + slippage fills"
-  notes: "Semi-realistic fill modeling missing"
+  next_step: "links integration to models"
+  notes: "includes core, engine, run structured"
+
 Validation:
   status: done
-  next_step: "Support link between back test and validators"
-  notes: "PUR integrated, automated verification +artifacts"
-Risk:
+  next_step: "add loops, analysts"
+  notes: "cross validation for time-series"
+
+Rrisk:
   status: done
-  next_step: null
-  notes: "Sizing, constraints, stops implemented according to Playbook"
+  next_step: "connect risk metrics to model and backtest"
+  notes: "metrics, sizing, position size"
+
 Reports:
-  status: done
-  next_step: "Render SHAP, STATS controls"
-  notes: "Render live with full report.json driven from backtest.py + allow drilldown"
+  status: not_started
+  next_step: "generate html/pdf dashboards"
+  notes: "full reports not implemented"
+
 Monitor:
   status: done
-  next_step: "Psi/ks detection, heartbeat"
-  notes: "PSi implemented, with thresholds and retrains"
+  next_step: "extend alert for thresholds"
+  notes: "drift.py + heartbeat.py tested"
+
+Sering:
+  status: not_started
+  next_step: "add compliance.dm to docs"
+  notes: "complaince left blank"
+
+Infra:
+  status: in_progress
+  next_step: "adds brokers automation"
+  notes: "CLI defined; brokers/" 
+
+Decisions:
+  status: not_started
+  next_step: "create decisions files"
+  notes: "no ADRs yet"
+
+Packs:
+  status: not_started
+  next_step: "build pack bundles"
+  notes: "no content yet"
