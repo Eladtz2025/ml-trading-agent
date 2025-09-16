@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-09-16T10:15:00Z",
+  "heartbeat": "up_to",
+  "drift_alerts": {
+    "VWAP": 0.185,
+    "OBV": 0.195
+},
+  "compliance": true
+}
