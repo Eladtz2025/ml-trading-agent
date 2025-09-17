@@ -1,0 +1,19 @@
+name: mean_reversion
+data: spy_daily.csv 
+label: next_bar_binary
+position_sizing: {
+  strategy: kelly
+  max_risk: 0.05
+}
+featurers: [
+   "bb_perc",
+    "RSI",
+    "zscore",
+    "atr_vol"
+]
+model:
+  name: xgboost
+  params: {
+    "max_depth": 4
+    "n_estimators": 100
+  }
