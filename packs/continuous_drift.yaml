@@ -1,0 +1,15 @@
+name: continuous_drift
+data: spy_daily.csv
+label: next_bar_binary
+drift:
+  trigger: PSI
+  threshold: 0.2
+retrain:
+  method: rolling
+  window_days: 90
+  max_unchanged: 3
+model:
+  name: xgboost
+  params:
+    max_depth: 4
+    n_estimators: 100
