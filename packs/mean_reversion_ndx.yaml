@@ -1,0 +1,20 @@
+name: mean_reversion_ndx
+data: ndx_2y.csv
+label: next_bar_binary
+position_sizing: {
+  strategy: kelly
+  max_risk: 0.05
+}
+features: [
+    "bb_perc",
+    "RSI",
+    "zscore",
+    "atr_vol"
+]
+model: {
+  name: "xgboost",
+  params: {
+    max_depth: 4,
+    n_estimators: 100
+  }
+}
