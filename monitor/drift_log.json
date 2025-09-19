@@ -1,0 +1,5 @@
+[
+    {"date": "2025-09-04", "psi": 0.15, "retrained": false},
+    {"date": "2025-09-07", "psi": 0.22, "retrained": true},
+    {"date": "2025-09-15", "psi": 0.28, "retrained": true}
+]
