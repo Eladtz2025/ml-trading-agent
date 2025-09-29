@@ -1,11 +1,13 @@
+
 Foundation:
   status: done
-  next_step: "ינאחא דהץהה ReADSME md blau kaym"
-  notes: 'ררוטייומ להן
- Data:
-  status: not_started
-  next_step: "Ìביוב PARQUET { splits, dividends } wrapper"
-  notes: "المريد ייומ להן", "checklist: build_checklist.md"
+  next_step: "קונפיגי REASMEE md בלא�"
+  notes: � المريد
+Data:
+  status: done
+  next_step: "parquet, cache, split apend checkpoint"
+  notes: "© config_loaded via ui-cli (real) wrapper
+
 Features:
   status: done
   next_step: "test under different configs"   
@@ -17,9 +19,9 @@ Labeling:
   notes: "next_bar, and triple_barrier are clear"
 
 Models:
-  status: in_progress
+  status: done
   next_step: "views validation and serialization"
-  notes: "dummy + XGBoost + Optuna +interface.py"
+  notes: "xgboost_model.py fully integrated with model_io, save version, pwd(Json output)"
 
 Backtest:
   status: done
@@ -31,15 +33,15 @@ Validation:
   next_step: "add loops, analysts"
   notes: "cross validation for time-series"
 
-Rrisk:
+Risk:
   status: done
   next_step: "connect risk metrics to model and backtest"
   notes: "metrics, sizing, position size"
 
 Reports:
-  status: not_started
+  status: done
   next_step: "generate html/pdf dashboards"
-  notes: "full reports not implemented"
+  notes: "model_version_id saved and shown in report_html"
 
 Monitor:
   status: done
@@ -54,9 +56,9 @@ Sering:
 Infra:
   status: in_progress
   next_step: "adds brokers automation"
-  notes: "CLI defined; brokers/" 
+  notes: "CLI defined; brokers/"
 
-Decisions:
+Decisions: 
   status: not_started
   next_step: "create decisions files"
   notes: "no ADRs yet"
