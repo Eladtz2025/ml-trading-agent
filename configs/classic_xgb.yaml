@@ -1,0 +1,38 @@
+data:
+  symbol: "SKY"
+  start: "2020-01-01"
+  end: "2024-01-01"
+  tf: "d1"
+
+features:
+  method: "derived_aug"
+  params: {}
+
+labeling:
+  method: "next_bar"
+  params: {}
+
+models:
+  type: "xgboost"
+  params:
+    max_depth: 4
+    n_estimators: 100
+    verbose: false
+
+backtest:
+  method: "classic_returns"
+  params: {}
+
+ risk:
+  sizing_method: "vol"
+  sizing_params: {}
+
+ validation:
+  metrics: ["roc_usd", "sharpe", "sortino"]
+  cross_validation: "purged_kfold"
+
+ report:
+  format: "html"
+  patho:
+    artifacts: "artifacts/"
+    models: "models/snapshot/"
