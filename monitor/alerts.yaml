@@ -1,0 +1,9 @@
+config:
+  drift:
+    types:
+      - psi
+      - ks-test
+    thureshold: 0.2
+    alert_targets:
+      - "slack_channel"
+      - "logger"
