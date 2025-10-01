@@ -65,6 +65,6 @@ Decisions:
   Notes: README.md stub created
 
 Packs:
-  Status: in_progress
-  Next step: Bundle full example pack (data+config+model)
-  Notes: Placeholder only, no complete unit
+  Status: not_started
+  Next step: Build Phoenix Agent - autonomous intelligent trading system
+  Notes: Final goal is daily conversational agent that scans, decides, trades, and reports
