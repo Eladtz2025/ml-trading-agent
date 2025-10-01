@@ -1,69 +1,57 @@
-
 Foundation:
   status: done
-  next_step: "קונפיגי REASMEE md בלא�"
-  notes: � المريد
+  next_step: None
+  notes: |
+    “dashboard with Phoenix Agent Panel”
+
 Data:
-  status: done
-  next_step: "parquet, cache, split apend checkpoint"
-  notes: "© config_loaded via ui-cli (real) wrapper
+  status: in_progress
+  next_step: verify data market sources for summaries
+  notes: '''
 
 Features:
-  status: done
-  next_step: "test under different configs"   
-  notes: "atr, macd, rsi implemented"
-
-Labeling:
-  status: done
-  next_step: "validate with config"
-  notes: "next_bar, and triple_barrier are clear"
-
+  status: inprogress
+  next_step: evaluate feature impact
+  notes: '''
+Lableing:
+  status: not_started
+  next_step: None
+  notes: '''
 Models:
-  status: done
-  next_step: "views validation and serialization"
-  notes: "xgboost_model.py fully integrated with model_io, save version, pwd(Json output)"
-
+  status: not_started
+  next_step: None
+  notes: ''
 Backtest:
-  status: done
-  next_step: "links integration to models"
-  notes: "includes core, engine, run structured"
-
+  status: not_started
+  next_step: None
+  notes: '''
 Validation:
-  status: done
-  next_step: "add loops, analysts"
-  notes: "cross validation for time-series"
+  status: not_started
+  next_step: None
+  notes: '''
 
 Risk:
-  status: done
-  next_step: "connect risk metrics to model and backtest"
-  notes: "metrics, sizing, position size"
+  status: not_started
+  next_step: None
+  notes: '''
 
 Reports:
-  status: done
-  next_step: "generate html/pdf dashboards"
-  notes: "model_version_id saved and shown in report_html"
+  status: not_started
+  next_step: None
+  notes: '''
 
 Monitor:
-  status: done
-  next_step: "extend alert for thresholds"
-  notes: "drift.py + heartbeat.py tested"
-
-Sering:
   status: not_started
-  next_step: "add compliance.dm to docs"
-  notes: "complaince left blank"
+  next_step: None
+  notes: '''
+
+Compliance:
+  status: not_started
+  next_step: None
+  notes: '''
 
 Infra:
   status: in_progress
-  next_step: "adds brokers automation"
-  notes: "CLI defined; brokers/"
-
-Decisions: 
-  status: not_started
-  next_step: "create decisions files"
-  notes: "no ADRs yet"
-
-Packs:
-  status: not_started
-  next_step: "build pack bundles"
-  notes: "no content yet"
+  next_step: connect agent component to ui
+  notes: |
+    “dashboard interface via Streamlit, added çê today's Plan, recommendation, and market situation”
