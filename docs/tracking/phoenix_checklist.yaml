@@ -10,13 +10,13 @@ Data:
   notes: '''
 
 Features:
-  status: inprogress
-  next_step: evaluate feature impact
-  notes: '''
-Lableing:
+  status: inmock
+  next_step: evaluate feature coverage
+  notes: 'Based on architecture blueprint + technical files'
+Labeling:
   status: not_started
   next_step: None
-  notes: '''
+  notes: ''
 Models:
   status: not_started
   next_step: None
@@ -51,7 +51,7 @@ Compliance:
   notes: '''
 
 Infra:
-  status: in_progress
+  status: done
   next_step: connect agent component to ui
   notes: |
-    “dashboard interface via Streamlit, added çê today's Plan, recommendation, and market situation”
+    ✜dashboard interface via Streamlit, added çê today's Plan, recommendation, and market situation”
