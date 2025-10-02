@@ -1,4 +1,59 @@
+Foundation:
+  status: done
+  next_step: "No needed - base is complete"
+  notes: see phase1 checklist
+Data:
+  status: in_progress
+  next_step: Update data sources, quality, and timing
+  notes: add live feeds, delayed updates
+Features:
+  status: in_progress
+  next_step: Generate features in real-time windows
+  notes: add optional technicals, multi-asset derivatives
+Labeling:
+  status: not_started
+  next_step: Define labels for agent intentions (buy/sell/enrich/wrong)
+  notes: temporaly label to start with
+Models:
+  status: in_progress
+  next_step: Retrain models with online integration
+  notes: add versioning and confidence layer
+Backtest:
+  status: in_progress
+  next_step: Extend backtests to support real-time valuation and latency
+  notes: add model results visualization
+Validation:
+  status: not_started
+  next_step: Build runtime outcome validation tool
+  notes: checks against train/validate/recommend
+  
+Risk:
+  status: not_started
+  next_step: Integrate risk that adds confidence and stop-loss rules
+  notes: add\n- confidence_score\n- stop_loss_limit
+
+Reports:
+  status: in_progress
+  next_step: Render interactive reports on demand trade, drift, agent decision
+  notes: user-friendly, daily or telegram
+
+Telemetry:
+  status: not_started
+  next_step: Multi-layer monitoring for agent, models, data, and api
+  notes: alerts about breaks/drift/corruption
+Compliance:
+  status: not_started
+  next_step: Check allocations and trades against regulation standards
+  notes: see local regulation document
+Infra:
+  status: in_progress
+  next_step: Fully modularize agent with catalog, ui and tests
+  notes: constructed style, clean layout
+Decisions:
+  status: in_progress
+  next_step: Configure agent default behavior with decision tree log
+  notes: records each autonomous move
 Packs:
-  Status: in_progress
-  Next step: Build Phoenix Agent - autonomous intelligent trading system
-  Notes: Final goal is daily conversational agent that scans, decides, trades, and reports
+  status: in_progress
+  next_step: Build Phoenix Agent - autonomous intelligent trading system
+  notes: Final goal is daily conversational agent that scans, decides, trades, and reports
