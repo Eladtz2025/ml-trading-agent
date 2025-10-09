@@ -1,59 +1,73 @@
 Foundation:
   status: done
   next_step: "No needed - base is complete"
-  notes: see phase1 checklist
+  notes: "base structure per architecture_blueprint.md squarely set"
+
 Data:
   status: in_progress
-  next_step: Update data sources, quality, and timing
-  notes: add live feeds, delayed updates
+  next_step: "add live/paper streams, generic anomaly tags into data/features"
+  notes: "sanity checks against time, returns anomalies, and levels"
+
 Features:
-  status: in_progress
-  next_step: Generate features in real-time windows
-  notes: add optional technicals, multi-asset derivatives
+  status: inprogress
+  next_step: "complete rsi/macd/atr, obv/vwap, regimes via clustering"
+  notes: "Monitor training drifts (PSI/KS) through monitor/"
 Labeling:
   status: not_started
-  next_step: Define labels for agent intentions (buy/sell/enrich/wrong)
-  notes: temporaly label to start with
+  next_step: "define next-bar to triple-barrier, with confidence scores"
+  notes: "regional labeling markers required (long-term data)
+
+Prediction:
+  status: not_started
+  next_step: "consolidate model output series --> signals/returns"
+  notes: "Automatic density or equity curves dependent on task category"
+
 Models:
-  status: in_progress
-  next_step: Retrain models with online integration
-  notes: add versioning and confidence layer
+  status: inprogress
+  next_step: "model interface (scores proba) - add XGBoost, LGBM, Shap, etc."
+  notes: "purging time-based information if using future-based labels"
+
 Backtest:
   status: in_progress
-  next_step: Extend backtests to support real-time valuation and latency
-  notes: add model results visualization
+  next_step: "complete next-open model, add commission/latency simulation"
+  notes: "Realistic entry-after-signal; next-open only"
+
 Validation:
   status: not_started
-  next_step: Build runtime outcome validation tool
-  notes: checks against train/validate/recommend
-  
-Risk:
+  next_step: "work forward, time splits, leakage checks"
+  notes: "classical via metrics hit rate/Sharpe/drawdown"
+
+Rirk: 
   status: not_started
-  next_step: Integrate risk that adds confidence and stop-loss rules
-  notes: add\n- confidence_score\n- stop_loss_limit
+  next_step: "configure exposure caps, volatility targeting, default max leverage"
+  notes: "Kelly sizing, correlation caps, drawdown limits"
 
 Reports:
-  status: in_progress
-  next_step: Render interactive reports on demand trade, drift, agent decision
-  notes: user-friendly, daily or telegram
+  status: inprogress
+  next_step: "SHAP plots, custom metrics, equity curves --> PDF/HTML"
+  notes: "dashboard brauser, filters by time/asset"
 
 Telemetry:
   status: not_started
-  next_step: Multi-layer monitoring for agent, models, data, and api
-  notes: alerts about breaks/drift/corruption
-Compliance:
+  next_step: "create monitor with PSI/KS in monitor/"
+  notes: "coupling vs training data should be gategauayed"
+
+Reports:
   status: not_started
-  next_step: Check allocations and trades against regulation standards
-  notes: see local regulation document
+  next_step: "regulatory checks; compliance.md; limits.txt"
+  notes: "see market_regulation_overview.md"
+
 Infra:
-  status: in_progress
-  next_step: Fully modularize agent with catalog, ui and tests
-  notes: constructed style, clean layout
+  status: inprogress
+  next_step: "check render.yaml, config.yaml, env.yaml"
+  notes: "Docker, PIP, staging/baseline/tests"
+
 Decisions:
   status: in_progress
-  next_step: Configure agent default behavior with decision tree log
-  notes: records each autonomous move
+  next_step: "ensure default behaviors in main.py/config.yaml"
+  notes: "model autoselection logs saved in artifacts/"
+
 Packs:
-  status: in_progress
-  next_step: Build Phoenix Agent - autonomous intelligent trading system
-  notes: Final goal is daily conversational agent that scans, decides, trades, and reports
+  status: inprogress
+  next_step: "define concrete trading packs in packs/"
+  notes: "atomic agilent --> runs through features/models/backtest/compliance"
