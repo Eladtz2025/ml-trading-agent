@@ -18,40 +18,45 @@ Labeling:
   next_step: unit tests + cache/labels
   notes: ''
 Models:
-  status: not_started
-  next_step: None
-  notes: ''
+  status: done
+  next_step: validation +retrain schedule
+  notes: 'Uses baseline models: Logistic + LGBM'
 Backtest:
-  status: not_started
-  next_step: None
-  notes: ''
-Validation:
-  status: not_started
+  status: done
+  next_step: benchmark analysis + cache/backtest
+  notes: 'Simulates Long/Short profits'
+Foundation:
+  status: done
   next_step: None
   notes: '''
+
+Validation:
+  status: not_started
+  next_step: verify challengers + errors
+  notes: 'Use champion vs challenger evaluation'
 
 Risk:
   status: not_started
   next_step: None
-  notes: '''
+  notes: ''
 
 Reports:
   status: not_started
   next_step: None
-  notes: '''
+  notes: ''
 
 Monitor:
   status: not_started
   next_step: None
-  notes: '''
+  notes: ''
 
 Compliance:
   status: not_started
   next_step: None
-  notes: '''
+  notes: ''
 
 Infra:
   status: done
   next_step: connect agent component to ui
   notes: |
-    ✜dashboard interface via Streamlit, added çê today's Plan, recommendation, and market situation”
+    ✜dashboard interface via Streamlit, added ëê today's Plan, recommendation, and market situation”
