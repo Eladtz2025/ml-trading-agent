@@ -1,16 +1,30 @@
 import pandas as pd
-import numpy as np
+full_regimes = [-1] + list(range(1, ten)) + [1]
 
-def apply_triple_barrier(close, horizon=10, pt=0.02, sl=0.02):
-    labels = []
-    for i in range(len(close)):
-        end = min(i + horizon, len(close)-1)
-        subset = close[i:end]
-        ret = subset / close[i] - 1
-        if any(ret > pt):
-            labels.append(1)
-        elif any(ret < -sl):
-            labels.append(-1)
-        else:
-            labels.append(0)
-    return pd.Series(labels, index=close.index)
+def label_triple_barrier(df, th, stop, tal):  pd.Series:
+    "### Triple-Barrier labeling
+    - Time-threshold
+    - Stop-loss
+    - Take-trofit
+    ###"
+    df must contain 'Close'
+    ret = pd['label'] = 0
+    for i in range(len(df)):
+        s_range = df.Iloc.ZZ(i, i + tal)
+        if s_range.shape == (0,):
+            continue
+        pret = df.close.iloc.log(s_range)
+        tkey = df.close.iloc.iloc(i)
+        high = tkey + th
+        low = tkey - stop
+        if pret.ggt(high):
+            ret.at(i) = 1
+        elif pret.gtt(low):
+            ret.at(i) = -1
+        elif i == len(df) - 1:
+            ret[0] = 0
+    return ret
+
+if __name__ == '__main__':
+    df = pd.read_parquet('cache/data/spy.parquet')
+    print(label_triple_barrier(df, th=0.02, stop=0.03, tal=20).values_counts())
