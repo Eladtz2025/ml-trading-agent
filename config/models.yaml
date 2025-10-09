@@ -1,0 +1,12 @@
+baseline:
+  type: logistic
+  params:
+    max_depth: 2
+    penalty: 'liblinear'
+    std: true
+lightgbm:
+  type: lightgbm
+  params:
+    learning_rate: 0.05
+    nl_leaves: 10
+    max_depth: 8
