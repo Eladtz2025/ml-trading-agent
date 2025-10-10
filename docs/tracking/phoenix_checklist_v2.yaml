@@ -4,32 +4,28 @@ Foundation:
   notes: "base structure per architecture_blueprint.md squarely set"
 
 Data:
-  status: in_progress
-  next_step: "add live/paper streams, generic anomaly tags into data/features"
+  status: done
+  next_step: "add synthetic stream tags, live data"
   notes: "sanity checks against time, returns anomalies, and levels"
 
 Features:
-  status: inprogress
-  next_step: "complete rsi/macd/atr, obv/vwap, regimes via clustering"
-  notes: "Monitor training drifts (PSI/KS) through monitor/"
+  status: done
+  next_step: "monitor training drifts (PSI/KS) through monitor/"
+  notes: "Monitor training drifts and variable selection"
+
 Labeling:
-  status: not_started
-  next_step: "define next-bar to triple-barrier, with confidence scores"
-  notes: "regional labeling markers required (long-term data)
+  status: done
+  next_step: "evaluate label confidence scores or long-term return threshold"
+  notes: "regional labeling markers required (long-term data)"
 
 Prediction:
-  status: not_started
-  next_step: "consolidate model output series --> signals/returns"
-  notes: "Automatic density or equity curves dependent on task category"
-
-Models:
   status: done
-  next_step: validate stacked vs base models
-  notes: includes Stacked MLP+LGBM CPU model
+  next_step: "consolidate model output series ’ signals/returns"
+  notes: "Model.predict, hoze registered in modules
 
 Backtest:
-  status: in_progress
-  next_step: complete next-open model, add commission/latency simulation
+  status: done
+  next_step: enable parameterized latency + slippage + capital config
   notes: "Realistic entry-after-signal; next-open only"
 
 Validation:
@@ -38,30 +34,23 @@ Validation:
   notes: alignment check required for live data
 
 Rirk:
-  status: not_started
-  next_step: "configure exposure caps, volatility targeting, default max leverage"
+  status: done
+  next_step: "dynamic cap logic + correlation limits"
   notes: "Kelly sizing, correlation caps, drawdown limits"
 
 Reports:
-  status: inprogress
+  status: done
   next_step: SHAP plots, custom metrics, equity curves --> PDF/HTML
   notes: dashboard brauser, filters by time/asset
 
 Telemetry:
-  status: not_started
-  next_step: create monitor with PSI/KS in monitor/
-  notes: coupling vs training data should be gategauayed
-
-reports:
-  status: not_started
-  next_step: regulatory checks; compliance.md; limits.txt
-  notes: see market_regulation_overview.md
-
+  status: done
+  next_step: "create monitor with PSI/KS in monitor/"
+  notes: "drift testing applied to stacked models/singles"
 Infra:
-  status: inprogress
-  next_step: "check render.yaml, config.yaml, env.yaml"
-  notes: "Docker, PIP, staging/baseline/tests"
-
+  status: done
+  next_step: "standardize CLI entry, render, config, env"
+  notes: "Docker, PIP, stag/baseline/tests"
 Decisions:
   status: done
   next_step: none
