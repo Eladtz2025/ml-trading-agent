@@ -1,67 +1,65 @@
+version: v1
+archived: true
+
 Foundation:
   status: done
-  next_step: None
-  notes: |
-    “dashboard with Phoenix Agent Panel”
+  next_step: null
+  notes: full architecture blueprint converted
 
 Data:
-  status: in_progress
-  next_step: verify data market sources for summaries
-  notes: '''
+  status: inprogress
+  next_step: validate feeds quality/anomaly
+  notes: parquet-live/training/dataset tracked
 
 Features:
   status: done
-  next_step: unit tests + tagging
-  notes: 'Based on architecture blueprint + technical files'
+  next_step: macd/atr plugins
+  notes: includes innovative technicals like rolling variance
+
 Labeling:
   status: done
-  next_step: unit tests + cache/labels
-  notes: ''
+  next_step: confidence scores / long-term threshold
+  notes: triple-barrier supported
+
 Models:
   status: done
-  next_step: validation +retrain schedule
-  notes: 'Uses baseline models: Logistic + LGBM'
+  next_step: Stacked ML@+LGBM model
+  notes: includes config / optimized structure
+
 Backtest:
   status: done
-  next_step: benchmark analysis + cache/backtest
-  notes: 'Simulates Long/Short profits'
-Foundation:
-  status: done
-  next_step: None
-  notes: '''
+  next_step: enable latency + slippage + capital config
+  notes: "Realistic entry-after-signal; next-open only"
 
 Tables:
   status: done
-  next_step: Refactoring with expected vriances + summary stats
-  notes: 'Replaces human readme with full summary of validation | trading | risk'
+  next_step: Refactoring with expected variances + summary stats
+  notes: dataaudit tables refactored replaces risk/trading states
 
 Validation:
   status: done
-  next_step: verify challengers + errors
-  notes: 'Use champion vs challenger evaluation'
-
+  next_step: errors / perf vs challenger
+  notes: validate metrics / model-selection
 Risk:
   status: done
-  next_step: configurable thresholds + rules
-  notes: 'Enforce max drawdown ? Sharpe min threshold? Volatility limmt'
+  next_step: dynamic cap logic + correlation limits
+  notes: Kelly sizing, correlation caps, drawdown limits
 
 Reports:
   status: done
-  next_step: generate Markdown tables + summary files
-  notes: 'Shared in cache/reports/'
+  next_step: SHAP plots, custom metrics, equity curves --> PDF/HTML
+  notes: dashboard brauser, filters by time/asset
 
 Monitor:
   status: done
-  next_step: monitor data quality + deviation registration
-  notes: 'Uses PCA/graphs + prediction post-hoc for error'
+  next_step: "create monitor with PSJ/KS in monitor/"
+  notes: "drift testing applied to stacked models/singles"
 
 Compliance:
   status: done
-  next_step: apply contract verification + reporting
-  notes: 'Input schema includes ticks, features, timestamt'
-
+  next_step: regulatory contracts + spec mapping
+  notes: "ESMA/FINRA/MIBID minimum-required"
 Infra:
   status: done
-  next_step: connect agent component to ui
-  notes: |
-    ✜dashboard interface via Streamlit, added ëê today's Plan, recommendation, and market situation”
+  next_step: "standardize CLI entry, render, config, env"
+  notes: "Docker, PIP, stag/baseline/tests"
