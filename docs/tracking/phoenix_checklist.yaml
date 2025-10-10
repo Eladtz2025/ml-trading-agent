@@ -30,30 +30,35 @@ Foundation:
   next_step: None
   notes: '''
 
+Tables:
+  status: done
+  next_step: Refactoring with expected vriances + summary stats
+  notes: 'Replaces human readme with full summary of validation | trading | risk'
+
 Validation:
-  status: not_started
+  status: done
   next_step: verify challengers + errors
   notes: 'Use champion vs challenger evaluation'
 
 Risk:
-  status: not_started
-  next_step: None
-  notes: ''
+  status: done
+  next_step: configurable thresholds + rules
+  notes: 'Enforce max drawdown ? Sharpe min threshold? Volatility limmt'
 
 Reports:
-  status: not_started
-  next_step: None
-  notes: ''
+  status: done
+  next_step: generate Markdown tables + summary files
+  notes: 'Shared in cache/reports/'
 
 Monitor:
-  status: not_started
-  next_step: None
-  notes: ''
+  status: done
+  next_step: monitor data quality + deviation registration
+  notes: 'Uses PCA/graphs + prediction post-hoc for error'
 
 Compliance:
-  status: not_started
-  next_step: None
-  notes: ''
+  status: done
+  next_step: apply contract verification + reporting
+  notes: 'Input schema includes ticks, features, timestamt'
 
 Infra:
   status: done
