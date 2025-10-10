@@ -23,39 +23,39 @@ Prediction:
   notes: "Automatic density or equity curves dependent on task category"
 
 Models:
-  status: inprogress
-  next_step: "model interface (scores proba) - add XGBoost, LGBM, Shap, etc."
-  notes: "purging time-based information if using future-based labels"
+  status: done
+  next_step: validate stacked vs base models
+  notes: includes Stacked MLP+LGBM CPU model
 
 Backtest:
   status: in_progress
-  next_step: "complete next-open model, add commission/latency simulation"
+  next_step: complete next-open model, add commission/latency simulation
   notes: "Realistic entry-after-signal; next-open only"
 
 Validation:
-  status: not_started
-  next_step: "work forward, time splits, leakage checks"
-  notes: "classical via metrics hit rate/Sharpe/drawdown"
+  status: done
+  next_step: compare base vs stacked performance
+  notes: alignment check required for live data
 
-Rirk: 
+Rirk:
   status: not_started
   next_step: "configure exposure caps, volatility targeting, default max leverage"
   notes: "Kelly sizing, correlation caps, drawdown limits"
 
 Reports:
   status: inprogress
-  next_step: "SHAP plots, custom metrics, equity curves --> PDF/HTML"
-  notes: "dashboard brauser, filters by time/asset"
+  next_step: SHAP plots, custom metrics, equity curves --> PDF/HTML
+  notes: dashboard brauser, filters by time/asset
 
 Telemetry:
   status: not_started
-  next_step: "create monitor with PSI/KS in monitor/"
-  notes: "coupling vs training data should be gategauayed"
+  next_step: create monitor with PSI/KS in monitor/
+  notes: coupling vs training data should be gategauayed
 
-Reports:
+reports:
   status: not_started
-  next_step: "regulatory checks; compliance.md; limits.txt"
-  notes: "see market_regulation_overview.md"
+  next_step: regulatory checks; compliance.md; limits.txt
+  notes: see market_regulation_overview.md
 
 Infra:
   status: inprogress
@@ -63,11 +63,11 @@ Infra:
   notes: "Docker, PIP, staging/baseline/tests"
 
 Decisions:
-  status: in_progress
-  next_step: "ensure default behaviors in main.py/config.yaml"
-  notes: "model autoselection logs saved in artifacts/"
+  status: done
+  next_step: none
+  notes: ADR 001 (Model Logic Upgrade) created and synced
 
 Packs:
-  status: inprogress
-  next_step: "define concrete trading packs in packs/"
-  notes: "atomic agilent --> runs through features/models/backtest/compliance"
+  status: done
+  next_step: prepare v1.0-rc release candidate
+  notes: release includes ADR 001 and stacked model
