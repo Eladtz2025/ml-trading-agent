@@ -1,0 +1,8 @@
+Frontend:
+  status: not_started
+  next_step: "UI/dashboard hender structure with equity curve, KPIs, and trade tables"
+  notes: "React with Shadcn/Tailwind, Equity Curve, Recharts, and Grid based output"
+Data:
+  status: not_started
+  next_step: "Define loaders including real time feeds, sentiment data, and live market feeds"
+  notes: "Review static and streamed feeds; merge with common data flow repo
