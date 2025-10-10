@@ -1,0 +1,12 @@
+mode: live
+assets: ['SPY', 'AAPL]
+features: ['regression', 'seasonal_diff']
+target_on: 'valid_signal'  # or output
+rules:
+  slippage: 0.004
+  max_position_size: 0.25
+trading:
+  start_cash: 10000
+  end_cash: 11000
+data_source: 'api'
+refresh: 1000s
