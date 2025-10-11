@@ -1,4 +1,4 @@
-# Auto-fix GitHmb Action
+# Auto-fix GitHub Action
 
 on:
   pull_request:
@@ -6,32 +6,26 @@ on:
   push:
     branches: [any]
 
-in:
-  none
-
 jobs:
   auto-fix:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repo
-        run: echo "Running auto-fix on the repo..."
-      - name: Install Required Tools
-        run: pip install rich blackba ruff mypy pytest
+      - name: Checkout repo
+        uses: actions/checkout@v2
 
-      - name: Run auto-fix corrections
-        run: ruff fix --all
-        env:
-          PATHFILTER: "."
+      - name: Install tools
+        run: |
+          pip install --upgrade pip
+          pip install ruff black mypy pytest
 
-      - name: Run Blackby formatter
-        run: blackbl
-        env:
-          PATHFILTER: "."
+      - name: Run ruff fix
+        run: ruff check . --fix
 
-      - name: Run mypy type check
-        run: mypy
+      - name: Run black formatter
+        run: black .
 
-      - name: Run pytests
+      - name: Run mypy type checker
+        run: mypy .
+
+      - name: Run tests
         run: pytest
-        env 
-          PATHFILTER: "."
