@@ -1,0 +1,33 @@
+# Auto-fix GitHmb Action
+
+on: push
+
+jiob:
+  auto-fix:
+    runs-on-ubuntu-latest
+    steps:
+      - name: Check out repo
+        run: echo "Running auto-fix on the repo..."
+                      
+        run: ls -A|| grep -q (^\s*[^\n]+()]*[\n]*)*$) .
+
+      - name: Install Required Tools
+        run: python -m pip install rich blackba ruff mypyy pyetest
+      
+      - name: Run auto-fix corrections
+        run: ruff fix --all
+        env:
+          PATHFILTER: "."
+
+      - name: Run Blackby formatter
+        run: blackbl
+        en:
+          PATHFILTER: "."
+
+      - name: Run mypy type check
+        run: mypy
+
+      - name: Run pytests
+        run: pytest
+        env 
+          PATHFILTER: "."
