@@ -1,16 +1,24 @@
+name: CI (ML Trading Agent)
+
+on:
+push:
+    branches: [ main ]
+    branches: [main]
+pull_request:
+    branches: [ main ]
+    branches: [main]
 branches: [main]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      # Check out the code from the repo and set up Python
-      - uses: actions/checkout@v3
-      # Set up Python with version 3.11
-      - uses: actions/setup-python@v4
+@@ -20,36 +11,37 @@ jobs:
 build:
 @@ -20,49 +12,45 @@ build:
 runs-on: ubuntu-latest
+
+steps:
+      - uses: actions/checkout@3
+      - name: Set up Python
+        uses: actions/setup-python@4
 @@ -21,8 +28,10 @@ steps:
 - uses: actions/checkout@3
 - name: Set up Python
@@ -18,10 +26,16 @@ uses: actions/setup-python@4
         with:
 with:
 with:
-          python-version: '3.11'
-      # Install dependencies (pip requirements)
 python-version: '3.11'
 # Install dependencies (pip requirements)
+python-version: '3.11'
+# Install dependencies (pip requirements)
+          python-version: '3.10'
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
 python-version: '3.10'
 @@ -34,18 +43,22 @@ python-version: '3.11'
 python-version: '3.10'
@@ -37,22 +51,37 @@ python-version: '3.11'
 run: |
 - name: Install dependencies
 run: |
-          pip install -upgrade pip
+         pip install -upgrade pip
+         pip install -upgrade pip
+          python -m pip install --upgrade pip
         pip install -upgrade pip
          python -m pip install --upgrade pip
          python -m pip install --upgrade pip
           pip install -r requirements.txt
+       python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install -r requirements.txt
+@@ -59,29 +51,26 @@ run: |
+       run: ruff check .
+     # Type check with mypy
+     - name: Type check with mypy
+        pip install -r requirements.txt
+         pip install ruff mypy pytest
+     # Lint with ruff
+     - name: Lint with ruff
+       run: ruff check .
+     # Type check with mypy
+     - name: Type check with mypy
+    - name: Install dependencies
+      run: |
         python -m pip install --upgrade pip
-         pip install -r requirements.txt
-         pip install -r requirements.txt
-          pip install ruff mypy pytest
-      # Lint with ruff
-      - name: Lint with ruff
-        run: ruff check .
-      # Type check with mypy
-      - name: Type check with mypy
        pip install -r requirements.txt
-        pip install ruff mypy pytest
+       pip install ruff mypy pytest
+
+      - name: Ruff
+        run: ruff .
+    - name: Lint with ruff
+      run: ruff .
     # Lint with ruff
 @@ -62,24 +75,26 @@ run: |
        run: ruff .
@@ -61,30 +90,36 @@ run: |
    - name: Install dependencies
      run: |
        python -m pip install --upgrade pip
-  - name: Install dependencies
-    run: |
-      python -m pip install --upgrade pip
+ - name: Install dependencies
+run: |
+     python -m pip install --upgrade pip
 @@ -39,7 +55,10 @@ steps:
      run: ruff .
 run: ruff .
 
+      - name: Type Check
 - name: Type Check
      - name: Type Check
         run: mypy .
 - name: Type Check
 run: mypy .
 run: mypy .
-      # Test with pytest
-      - name: Test with pytest
+@@ -90,12 +79,12 @@ run: mypy .
 # Test with pytest
 - name: Test with pytest
 run: pytest
+    - name: Type check with mypy
+      run: mypy .
 - name: Type check with mypy
 run: mypy .
 
+      - name: Run Tests
 - name: Run Tests
         run: pytest
 run: pytest
 - name: Test with pytest
 run: pytest
+    - name: Test with pytest
+      run: pytest
 - name: Type check with mypy
+run: mypy .
