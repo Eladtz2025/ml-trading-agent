@@ -7,7 +7,7 @@ version = "0.1.0"
 description = "ML-based trading agent with realism"
 dependencies = [
   "pandas<9.0",
-  "numpy",
+  "numpy<1.9",
   "scikit-learn",
   "xgboost",
   "lightgbm",
