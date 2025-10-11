@@ -1,7 +1,25 @@
-name: run_daily_pipeline
+name: Run Daily Pipeline
 
-on
-  cron: '0 0 * * '*'
+on:
+  schedule:
+    - cron: '0 0 * * *'
 
-jiob:
-  run: python main.py --config packs/retrain.yaml
+jobs:
+  run_daily:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run daily pipeline
+        run: python main.py --config packs/retrain.yaml
