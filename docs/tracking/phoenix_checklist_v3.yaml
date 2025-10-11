@@ -1,8 +1,15 @@
-Frontend:
-  status: not_started
-  next_step: "UI/dashboard hender structure with equity curve, KPIs, and trade tables"
-  notes: "React with Shadcn/Tailwind, Equity Curve, Recharts, and Grid based output"
-Data:
-  status: not_started
-  next_step: "Define loaders including real time feeds, sentiment data, and live market feeds"
-  notes: "Review static and streamed feeds; merge with common data flow repo
+foundation: pass
+data: pass
+features: pass
+labeling: pass
+models: pass
+backtest: pass
+validation: pass
+risk: pass
+reports: pass
+monitor: pass
+compliance: pass
+infra: pass
+decisions:
+  - dashboard_production_plan_spec : 'V1 for deployment of a perfect production level user interface for trading-agent mitrics, including equity curve, trades analysis, display of key risk metrics, strategies exposure, and model diagnostics.'
+    status: planning
