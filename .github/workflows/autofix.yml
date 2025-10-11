@@ -1,47 +1,56 @@
 # Auto-fix GitHub Action
 
 on:
+  push:
   pull_request:
     branches: [any]
 push:
     branches: [any]
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+branches: ["main"]
+pull_request:
+branches: ["main"]
 
 jobs:
   auto-fix:
-  autofix:
+autofix:
+    runs-on: ubuntu-latest
+    steps:
 runs-on: ubuntu-latest
 steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Checkout repository
-        uses: actions/checkout@v3
+- name: Checkout repository
+uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+@@ -18,19 +24,24 @@ jobs:
+with:
+python-version: '3.10'
 
+      - name: Install tools
+        run: |
 - name: Install tools
 run: |
           pip install --upgrade pip
-          python -m pip install --upgrade pip
+         python -m pip install --upgrade pip
+          pip install ruff black mypy pytest
          pip install ruff black mypy pytest
 
       - name: Run ruff fix
-      - name: Run Ruff (auto-fix)
+     - name: Run Ruff (auto-fix)
+        run: ruff check . --fix
 run: ruff check . --fix
 
       - name: Run black formatter
-      - name: Run Black (formatter)
+- name: Run Black (formatter)
+        run: black .
 run: black .
 
       - name: Run mypy type checker
-      - name: Run Mypy (type checking)
+- name: Run Mypy (type checking)
+        run: mypy .
 run: mypy .
 
       - name: Run tests
-      - name: Run Pytest (tests)
+- name: Run Pytest (tests)
+        run: pytest
 run: pytest
