@@ -1,5 +1,5 @@
 [tool]
-tool="poetry"
+tool = "poetry"
 
 [project]
 name = "ml-trading-agent"
@@ -7,7 +7,7 @@ version = "0.1.0"
 description = "ML-based trading agent with realism"
 dependencies = [
   "pandas<9.0",
-  "numpy<"1.9",
+  "numpy<1.9",
   "scikit-learn",
   "xgboost",
   "lightgbm",
