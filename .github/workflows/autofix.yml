@@ -1,19 +1,23 @@
 # Auto-fix GitHmb Action
 
-on: push
+on:
+  pull_request:
+    branches: [any]
+  push:
+    branches: [any]
 
-jiob:
+in:
+  none
+
+jobs:
   auto-fix:
-    runs-on-ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Check out repo
         run: echo "Running auto-fix on the repo..."
-                      
-        run: ls -A|| grep -q (^\s*[^\n]+()]*[\n]*)*$) .
-
       - name: Install Required Tools
-        run: python -m pip install rich blackba ruff mypyy pyetest
-      
+        run: pip install rich blackba ruff mypy pytest
+
       - name: Run auto-fix corrections
         run: ruff fix --all
         env:
@@ -21,7 +25,7 @@ jiob:
 
       - name: Run Blackby formatter
         run: blackbl
-        en:
+        env:
           PATHFILTER: "."
 
       - name: Run mypy type check
