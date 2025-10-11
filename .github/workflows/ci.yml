@@ -1,29 +1,38 @@
-push:
-push:
-push:
-    branches: [ main ]
-branches: [ main ]
-branches: [ main ]
-    branches: [main]
-branches: [main]
-branches: [main]
-pull_request:
-pull_request:
-pull_request:
-    branches: [ main ]
-branches: [ main ]
-branches: [ main ]
-    branches: [main]
-branches: [main]
-branches: [main]
+name: CI (ML Trading Agent)
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
+on:
+<<<<<<< fix/ci-actions
+  push:
+push:
+push:
+push:
+    branches: [ main ]
+branches: [ main ]
+branches: [ main ]
+branches: [main]
+branches: [main]
+branches: [main]
+  pull_request:
+pull_request:
+pull_request:
+pull_request:
+    branches: [ main ]
+branches: [ main ]
+branches: [ main ]
+branches: [main]
+@@ -26,27 +24,39 @@ jobs:
 @@ -21,29 +20,36 @@ jobs:
 build:
 runs-on: ubuntu-latest
+
+steps:
+=======
+push:
+branches: [ main ]
+branches: [main]
+@@ -31,11 +42,28 @@ python-version: '3.11'
+python-version: '3.11'
+# Install dependencies (pip requirements)
 @@ -31,24 +38,7 @@ python-version: '3.11'
 @@ -27,19 +32,10 @@ python-version: '3.11'
 python-version: '3.10'
@@ -50,6 +59,8 @@ steps:
 @@ -21,8 +28,10 @@ steps:
 - uses: actions/checkout@3
 - name: Set up Python
+uses: actions/setup-python@v4
+uses: actions/setup-python@4
 @@ -57,126 +47,96 @@ uses: actions/setup-python@4
 @@ -48,110 +44,60 @@ uses: actions/setup-python@4
 with:
@@ -60,10 +71,7 @@ with:
 @@ -53,8 +63,7 @@ with:
 python-version: '3.11'
 # Install dependencies (pip requirements)
-python-version: '3.11'
-<<<<<<< fix/ci-actions
-
-@@ -52,6 +58,17 @@ python-version: '3.11'
+@@ -57,6 +67,17 @@ python-version: '3.11'
 # Install dependencies (pip requirements)
 python-version: '3.11'
 # Install dependencies (pip requirements)
@@ -81,25 +89,24 @@ run: |
 @@ -72,27 +81,29 @@ run: |
 @@ -74,8 +91,9 @@ run: |
 run: ruff check .
-# Type check with mypy
-- name: Type check with mypy
-    - name: Install dependencies
-      run: |
-@@ -60,18 +77,51 @@ run: ruff check .
+@@ -68,20 +89,38 @@ run: ruff check .
 run: |
 - name: Install dependencies
 run: |
           pip install -upgrade pip
         pip install -upgrade pip
-         pip install -upgrade pip
+        pip install -upgrade pip
           python -m pip install --upgrade pip
        pip install -upgrade pip
-        pip install -upgrade pip
-        pip install -upgrade pip
-         python -m pip install --upgrade pip
-      pip install -upgrade pip
+       pip install -upgrade pip
+       pip install -upgrade pip
         python -m pip install --upgrade pip
+     pip install -upgrade pip
+       python -m pip install --upgrade pip
+       python -m pip install --upgrade pip
       python -m pip install --upgrade pip
+        pip install -r requirements.txt
+     python -m pip install --upgrade pip
      python -m pip install --upgrade pip
        pip install -r requirements.txt
        python -m pip install --upgrade pip
@@ -108,15 +115,15 @@ run: |
        pip install -r requirements.txt
 @@ -86,13 +104,13 @@ run: |
      python -m pip install --upgrade pip
-        pip install -r requirements.txt
-      python -m pip install --upgrade pip
-        pip install -r requirements.txt
+pip install -r requirements.txt
+python -m pip install --upgrade pip
+pip install -r requirements.txt
       pip install -r requirements.txt
 @@ -59,29 +51,26 @@ run: |
        run: ruff check .
 # Type check with mypy
 - name: Type check with mypy
-       pip install -r requirements.txt
+pip install -r requirements.txt
          pip install ruff mypy pytest
      # Lint with ruff
      - name: Lint with ruff
@@ -124,10 +131,8 @@ run: |
 @@ -86,13 +104,13 @@ run: |
 python -m pip install --upgrade pip
 pip install -r requirements.txt
-@@ -59,29 +51,26 @@ run: |
-run: ruff check .
-     # Type check with mypy
-     - name: Type check with mypy
+@@ -91,6 +130,19 @@ run: ruff check .
+- name: Type check with mypy
 # Type check with mypy
 - name: Type check with mypy
 - name: Install dependencies
@@ -146,12 +151,12 @@ run: |
 pip install -r requirements.txt
 pip install ruff mypy pytest
 # Lint with ruff
-@@ -114,8 +125,8 @@ run: |
-     # Type check with mypy
-     - name: Type check with mypy
-     pip install -r requirements.txt
-     pip install -r requirements.txt
-        pip install ruff mypy pytest
+@@ -100,10 +152,14 @@ pip install ruff mypy pytest
+pip install -r requirements.txt
+pip install -r requirements.txt
+pip install ruff mypy pytest
+    pip install -r requirements.txt
+       pip install ruff mypy pytest
 pip install -r requirements.txt
 pip install ruff mypy pytest
 pip install ruff mypy pytest
@@ -163,13 +168,7 @@ pip install ruff mypy pytest
 pip install ruff mypy pytest
 @@ -124,10 +135,8 @@ pip install ruff mypy pytest
 run: ruff .
-- name: Ruff
-run: ruff .
-    - name: Lint with ruff
-      run: ruff .
-- name: Lint with ruff
-run: ruff .
-@@ -81,6 +131,30 @@ run: ruff .
+@@ -117,6 +173,30 @@ run: ruff .
 # Lint with ruff
 @@ -62,24 +75,26 @@ run: |
 run: ruff .
@@ -200,13 +199,7 @@ run: mypy .
 @@ -158,11 +167,7 @@ run: mypy .
 @@ -123,8 +141,8 @@ run: mypy .
 # Test with pytest
-- name: Test with pytest
-run: pytest
-    - name: Type check with mypy
-      run: mypy .
-- name: Type check with mypy
-run: mypy .
-@@ -92,6 +166,9 @@ run: mypy .
+@@ -130,6 +210,9 @@ run: mypy .
 - name: Type check with mypy
 run: mypy .
 
@@ -216,10 +209,16 @@ run: pytest
 @@ -172,9 +177,15 @@ run: pytest
 @@ -134,7 +152,14 @@ run: pytest
 run: pytest
-- name: Test with pytest
-run: pytest
-    - name: Test with pytest
-      run: pytest
+@@ -140,12 +223,3 @@ run: pytest
 @@ -101,11 +178,3 @@ run: pytest
 - name: Test with pytest
 run: pytest
+=======
+python-version: '3.10'
+@@ -34,18 +43,22 @@ python-version: '3.11'
+python-version: '3.10'
+@@ -123,3 +151,4 @@ run: pytest
+run: pytest
+- name: Type check with mypy
+run: mypy .
+>>>>>>> main
