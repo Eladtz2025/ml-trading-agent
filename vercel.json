@@ -1,5 +1,8 @@
 {
+  "root": "ui",
+  "buildCommand": "npn run build",
+  "outputDir": "build",
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/(.*)", "destination": "/index.html"}
   ]
 }
