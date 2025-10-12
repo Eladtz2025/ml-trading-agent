@@ -1,27 +1,35 @@
-name: Auto-Fixer on Python Files
+name: "Auto Fix Files"
 
 on:
   push:
-    paths: ['~*.py']
+    branches: [main]
 
 jobs:
-  fixer:
+  autofix:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: 3.11
 
-      - name: Install ruff
-        run: pip install ruff
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      - name: Auto-fix by ruff
-        run: ruff --fix.
-
-      - name: Commit updated
+      - name: Install tools
         run: |
-          git config --use
-          git add .
-          git commit -m "Auto-fix: ruff format applied automatically"
+          pip install ruff
+          npm install -g markdownlint-cli
+
+      - name: Auto-fix Python
+        run: ruff . --fix
+
+      - name: Auto-fix Markdown
+        run: markdownlint --fix '**/*.md'
+
+      # תוכל להוסיף כאן דברים נוספים כמו פורמט ל־JSON, YAML וכו'
