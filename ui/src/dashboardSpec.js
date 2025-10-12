@@ -158,6 +158,18 @@ export const componentCatalog = {
     description: 'Control panel to swap configs, roll back, or schedule changes.',
     kind: 'control'
   },
+  vercel_deploy: {
+    id: 'vercel_deploy',
+    title: 'Deploy to Vercel',
+    description: 'Launch a guided deployment of this dashboard to Vercel without leaving the command center.',
+    kind: 'control',
+    cta: {
+      label: 'Deploy to Vercel',
+      href: 'https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmltradingai%2Fml-trading-agent',
+      target: '_blank',
+      type: 'vercel'
+    }
+  },
   artifacts_browser: {
     id: 'artifacts_browser',
     title: 'Artifacts Browser',
@@ -252,7 +264,14 @@ export const dashboardSpec = {
       id: 'config_ops',
       title: '⚙️ Config & Ops',
       description: 'Configuration management, run logs, and operational tooling.',
-      components: ['current_config_viewer', 'config_selector_launcher', 'artifacts_browser', 'logs_panel', 'run_status_indicator']
+      components: [
+        'current_config_viewer',
+        'config_selector_launcher',
+        'vercel_deploy',
+        'artifacts_browser',
+        'logs_panel',
+        'run_status_indicator'
+      ]
     },
     {
       id: 'agent_interface',

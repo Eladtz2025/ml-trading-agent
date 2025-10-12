@@ -1,5 +1,10 @@
 import React from 'react';
-import { ComponentKind, dashboardSpec, getComponentDetails } from '../data/dashboardSpec';
+import {
+  ComponentKind,
+  DashboardComponent,
+  dashboardSpec,
+  getComponentDetails
+} from '../data/dashboardSpec';
 
 type KindLabelMap = Record<ComponentKind, string> & Record<string, string>;
 
@@ -15,6 +20,48 @@ const kindToLabel: KindLabelMap = {
 };
 
 const Dashboard: React.FC = () => {
+  const [actionStatus, setActionStatus] = React.useState<
+    Record<string, 'idle' | 'launching' | 'complete'>
+  >({});
+
+  const handleComponentAction = (component: DashboardComponent) => {
+    if (!component.cta) {
+      return;
+    }
+
+    if (component.cta.type === 'vercel') {
+      setActionStatus((prev) => ({ ...prev, [component.id]: 'launching' }));
+
+      if (typeof window !== 'undefined') {
+        const href = component.cta.href ?? 'https://vercel.com/new';
+        const openWindow = () => {
+          const newWindow = window.open(href, '_blank', 'noopener,noreferrer');
+          setTimeout(() => {
+            setActionStatus((prev) => ({
+              ...prev,
+              [component.id]: newWindow ? 'complete' : 'idle'
+            }));
+          }, 300);
+        };
+
+        try {
+          openWindow();
+        } catch (error) {
+          setActionStatus((prev) => ({ ...prev, [component.id]: 'idle' }));
+          console.error('Failed to open Vercel deployment window', error);
+        }
+      } else {
+        setActionStatus((prev) => ({ ...prev, [component.id]: 'idle' }));
+      }
+
+      return;
+    }
+
+    if (component.cta.href && typeof window !== 'undefined') {
+      window.open(component.cta.href, component.cta.target ?? '_self', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <div className="app-shell">
       <header className="hero">
@@ -48,6 +95,9 @@ const Dashboard: React.FC = () => {
               {section.components.map((componentId) => {
                 const component = getComponentDetails(componentId);
                 const kindLabel = kindToLabel[component.kind] ?? 'Component';
+                const status = actionStatus[component.id] ?? 'idle';
+                const actionLabel = component.cta?.label ?? `Open ${component.title}`;
+                const isActionDisabled = component.cta?.type === 'vercel' && status === 'launching';
 
                 return (
                   <article key={component.id} className={`component-card component-card--${component.kind}`}>
@@ -59,11 +109,19 @@ const Dashboard: React.FC = () => {
                     <footer>
                       <button
                         type="button"
-                        className="component-action"
-                        aria-label={`Open ${component.title}`}
+                        className={`component-action${component.cta?.type === 'vercel' ? ' component-action--primary' : ''}`}
+                        onClick={() => handleComponentAction(component)}
+                        disabled={isActionDisabled}
+                        aria-busy={isActionDisabled}
+                        aria-label={actionLabel}
                       >
-                        Open {component.title}
+                        {status === 'launching' ? 'Opening…' : actionLabel}
                       </button>
+                      {component.cta?.type === 'vercel' && status === 'complete' && (
+                        <p className="component-status" role="status">
+                          Deployment flow opened in a new tab. Complete the steps in Vercel to finish deploying.
+                        </p>
+                      )}
                     </footer>
                   </article>
                 );
