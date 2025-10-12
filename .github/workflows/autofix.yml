@@ -1,36 +1,24 @@
-name: Auto-fix
-
-on:
-  push:
-    branches: [main]
+name: Auto-fix 
+ 
+on: 
   pull_request:
-    branches: [main]
 
-jobs:
-  autofix:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+# just on PR
+mail:
+  runs-on: ubuntu-latest
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install Ruff
+      run: |
+        python -m pip install ruff
 
-      - name: Install tools
-        run: |
-          python -m pip install --upgrade pip
-          pip install ruff black mypy pytest
-
-      - name: Run Ruff (auto-fix)
-        run: ruff check . --fix
-
-      - name: Run Black (formatter)
-        run: black .
-
-      - name: Run Mypy (type checking)
-        run: mypy .
-
-      - name: Run Pytest (tests)
-        run: pytest
+    - name: Run ruff --fix
+      run: ruff --fix .
+    - name: Push changes if any
+      runs: |
+        git config user --name=github-action --email=Action@github.com --local
+        git add .
+        git commit -m "autofix: ruff --fix" 
+        git push
