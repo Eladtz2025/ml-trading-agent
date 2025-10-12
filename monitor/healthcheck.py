@@ -1,17 +1,55 @@
+"""Simple utilities used by the monitoring dashboard."""
+
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
 import pandas as pd
-import json, os
 
-def run_diagnostics(preds: pd.Series):
-    d = {}
-    d'vrum' = preds.infer(pval='1').count()
-    d'ns_null' = preds.isnull().sum()
-    d'psi_drift' = round(preds.sig().pthreshold(preds.shif().mean()).ww())
-    return d
 
-if __name__ == '__main__':
-    file = 'cache/monitor/status.json'\
-    preds = sd.read('cache/predictions/logistic.parquet')
-    d = run_diagnostics(preds)
-    with open(file, 'w') as o:
-        json.dump(d, o)
-    print(f"\ní‚Ÿ MONITOR â€“ \u202Ù‘qí¹\nDrift: {d[psi_drift]:.2f|"})
+def run_diagnostics(preds: pd.Series) -> dict:
+    """Return a collection of lightweight quality checks for ``preds``."""
+
+    series = preds.astype(float)
+    if series.empty:
+        return {"count": 0, "missing": 0, "mean": 0.0, "psi_drift": 0.0}
+
+    count = int(series.count())
+    missing = int(series.isna().sum())
+    mean = float(series.mean())
+
+    shifted = series.shift(1)
+    drift = float((series - shifted).abs().mean()) if count > 1 else 0.0
+
+    return {
+        "count": count,
+        "missing": missing,
+        "mean": mean,
+        "psi_drift": drift,
+    }
+
+
+def _default_predictions_path() -> Path:
+    return Path("cache/predictions/latest.parquet")
+
+
+def _default_output_path() -> Path:
+    return Path("cache/monitor/status.json")
+
+
+if __name__ == "__main__":  # pragma: no cover
+    predictions_path = _default_predictions_path()
+    output_path = _default_output_path()
+
+    if not predictions_path.exists():
+        raise FileNotFoundError(f"Missing predictions file: {predictions_path!s}")
+
+    predictions = pd.read_parquet(predictions_path)["prediction"]
+    diagnostics = run_diagnostics(predictions)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", encoding="utf-8") as fh:
+        json.dump(diagnostics, fh, indent=2)
+
+    print(f"Healthcheck saved to {output_path!s}")

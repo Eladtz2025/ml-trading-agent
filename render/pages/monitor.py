@@ -1,53 +1,63 @@
-import streamlit as st
+"""Streamlit page showing monitoring information for recent runs."""
+
+from __future__ import annotations
+
 import json
+from pathlib import Path
+from typing import Any, Mapping
+
 import pandas as pd
-import os
-from path import join
-def load_report(run_id):
-    path = "../../reports/report.json" # **TD:** update default
-    
-results = {}
-    if not os.path.exists(path):
-        st.text("No report available for this run. Run backline to generate one.")
-        return results
-    with open(path, 'r') as f:
-        results = json.load(f)
-        st.success("Loaded report with run ID: {}".format(run_id))
-    return results
+import streamlit as st
 
-st.title("MONITOR & DRIFT - Report Analysis")
+DEFAULT_REPORT_PATH = Path("artifacts/report.json")
 
-_runs = ["", "RN01", "RL64", "RN02"]
-selected_run = st.select_box("Run ID", _unselected_options=_runs)
-report = load_report(selected_run)
 
-def display_section(title, data):
-    st.subtext(title)
+def load_report(path: Path = DEFAULT_REPORT_PATH) -> Mapping[str, Any]:
+    if not path.exists():
+        return {}
+    with path.open("r", encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def display_section(title: str, data: Any) -> None:
+    st.subheader(title)
     if isinstance(data, dict):
-       df = pd.pandas(data)
-        st.stat_dataframe(df)
+        st.json(data)
+    elif isinstance(data, (list, tuple)):
+        st.write(pd.DataFrame(data))
+    elif isinstance(data, pd.Series):
+        st.line_chart(data)
     else:
-        st.text(str(data))
+        st.write(data)
 
-if "report" in report:
-    data = report["Report"]
-    if "metrics" in data:
-        m = data["metrics"]
-        o = list(m.keys())
-        choice = st.select_box("Choose metric to view", o)
-        if choice:
-            df = pd.DataFrame([str(k) for k, v=instance(m[choice][0], dict)])
-            df.set_index("")
-            st.line_chart(df)
 
-    if "model" in data:
-        m = data["model"]
-        display_section("model", m)
+def as_series(value: Any, name: str) -> pd.Series:
+    if isinstance(value, pd.Series):
+        return value
+    return pd.Series(value, name=name)
 
-    if "labels" in data:
-        l = data["labels"]
-        display_section("labeling", l)
 
-    if "config" in data:
-        conf = data["config"]
-        display_section("config", conf)
+def main() -> None:
+    st.title("Monitor & Drift - Report Analysis")
+    report_path = st.text_input("Report path", str(DEFAULT_REPORT_PATH))
+    report = load_report(Path(report_path))
+
+    if not report:
+        st.info("No report available for the selected path.")
+        return
+
+    if "quotes" in report:
+        display_section("Quotes", as_series(report["quotes"], "quotes"))
+
+    if "metrics" in report:
+        display_section("Metrics", report["metrics"])
+
+    if "predictions" in report:
+        display_section("Predictions", as_series(report["predictions"], "predictions"))
+
+    if "config" in report:
+        display_section("Configuration", report["config"])
+
+
+if __name__ == "__main__":  # pragma: no cover
+    main()
