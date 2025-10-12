@@ -31,6 +31,3 @@ jobs:
           ruff check --fix --unsafe-fixes .
           black .
           isort .
-
-      - name: Auto-fix Markdown
-        run: markdownlint --fix '**/*.md'
