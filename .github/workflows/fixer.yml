@@ -1,0 +1,27 @@
+name: Auto-Fixer on Python Files
+
+on:
+  push:
+    paths: ['~*.py']
+
+jobs:
+  fixer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install ruff
+        run: pip install ruff
+
+      - name: Auto-fix by ruff
+        run: ruff --fix.
+
+      - name: Commit updated
+        run: |
+          git config --use
+          git add .
+          git commit -m "Auto-fix: ruff format applied automatically"
