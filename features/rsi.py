@@ -57,3 +57,6 @@ def compute_rsi(prices: pd.Series, window: int = 14) -> pd.Series:
 
     rsi.name = "rsi"
     return rsi
+
+
+__all__ = ["compute_rsi"]

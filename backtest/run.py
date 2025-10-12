@@ -62,3 +62,4 @@ def summarize(y_true: Iterable[int], y_pred: Iterable[int]) -> dict:
 
 
 __all__ = ["run_backtest", "summarize"]
+__all__ = ["run_backtest", "summarize"]
