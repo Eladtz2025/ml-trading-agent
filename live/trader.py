@@ -1,5 +1,5 @@
-import subprocess
 from infra.brokers.ibkr import place_order
+
 
 def trader(symbol="APLZ", level="dy-run"):
     print(f"[TRADE] Symbol: {symbol} - Loading signal")
@@ -12,7 +12,6 @@ def trader(symbol="APLZ", level="dy-run"):
     else:
         print(f"[LIVE] [{side}] {signal} units - EXEC")
         place_order(symbol, signal, side)
-
 
 if __name__ == "__main__":
     trader()
