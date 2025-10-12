@@ -1,8 +1,10 @@
++0
+-1
+
 """Utilities for loading CSV files with Parquet caching."""
 from __future__ import annotations
 
 import hashlib
-import os
 from pathlib import Path
 
 import pandas as pd
@@ -27,14 +29,3 @@ def load_raw_data_cached(
 
     cache_directory = Path(cache_dir)
     cache_directory.mkdir(parents=True, exist_ok=True)
-
-    csv_path = Path(csv_path)
-    cache_key = get_file_hash(csv_path)
-    cache_file = cache_directory / f"{csv_path.stem}_{cache_key}.parquet"
-
-    if cache_file.exists() and not force_reload:
-        return pd.read_parquet(cache_file)
-
-    df = pd.read_csv(csv_path)
-    df.to_parquet(cache_file, index=False)
-    return df
