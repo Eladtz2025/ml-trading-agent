@@ -27,7 +27,7 @@ jobs:
           npm install -g markdownlint-cli
 
       - name: Auto-fix Python
-        run: ruff . --fix
+        run: ruff --fix .
 
       - name: Auto-fix Markdown
         run: markdownlint --fix '**/*.md'
