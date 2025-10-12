@@ -1,4 +1,4 @@
-# ML Trading Agent 
+# ML Trading Agent
 
 Elite MM-trading system with realistic execution, validation, and risk modeling.
 
