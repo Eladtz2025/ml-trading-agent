@@ -1,12 +1,20 @@
-"""Volume Weighted Average Price (VWAP) utilities."""
+"""Utilities for computing simple market regimes."""
 
 from __future__ import annotations
 
+import warnings
+
 import pandas as pd
+from sklearn.cluster import KMeans
+
+DEFAULT_N_REGIMES = 3
 
 
-def compute_vwap(df: pd.DataFrame) -> pd.Series:
-    """Compute the cumulative VWAP for a price series."""
+def compute_regime(df: pd.DataFrame, n_regimes: int = DEFAULT_N_REGIMES) -> pd.Series:
+    """Cluster log returns into discrete regimes."""
+
+    if n_regimes <= 0:
+        raise ValueError("n_regimes must be positive")
 
     if "close" in df.columns:
         close = df["close"]
@@ -15,26 +23,21 @@ def compute_vwap(df: pd.DataFrame) -> pd.Series:
     else:
         raise KeyError("DataFrame must contain a 'close' column")
 
-    if "volume" in df.columns:
-        volume = df["volume"]
-    elif "Volume" in df.columns:
-        volume = df["Volume"]
-    else:
-        raise KeyError("DataFrame must contain a 'volume' column")
+    returns = close.pct_change().fillna(0).to_frame("returns")
 
-    volume = volume.fillna(0)
-    price_volume = (close.fillna(method="ffill") * volume).cumsum()
-    cumulative_volume = volume.cumsum().replace(0, pd.NA)
+    if len(returns) < n_regimes:
+        warnings.warn(
+            "Not enough samples to compute regimes; returning zeros.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+        return pd.Series(0, index=returns.index, name="regime")
 
-    vwap = price_volume / cumulative_volume
-    return pd.Series(vwap, index=df.index, name="vwap")
+    model = KMeans(n_clusters=n_regimes, random_state=42, n_init=10)
+    labels = model.fit_predict(returns)
+    return pd.Series(labels, index=returns.index, name="regime")
 
 
 if __name__ == "__main__":
-    frame = pd.DataFrame(
-        {
-            "close": [100, 101, 102, 103],
-            "volume": [200, 150, 180, 220],
-        }
-    )
-    print(compute_vwap(frame))
+    data = pd.DataFrame({"close": [100, 101, 102, 101, 99, 100]})
+    print(compute_regime(data).value_counts())
