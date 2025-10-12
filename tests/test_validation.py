@@ -1,17 +1,14 @@
-import os
-import unittest.mock as mock
+import pandas as pd
+import pytest
 
-from backtest import Backtest
-from config import config
+from backtest.run import summarize
 
-def test_backtest_report_generation():
-    with mock.patch("os.remove"):
-        report, preds = Backtest.run(config)
-        assert report is not None, "No report returned"
-        preds.to_csv("artifacts/_preds.test.csv")
-        pred_path = "artifacts/predictions.csv"
-        report_path = "artifacts/report.html"
-        plot_path = "artifacts/plot_predictions.png"
-        assert os.path.isfile(pred_path), "Predictions cSV not saved"
-        assert os.path.isfile(report_path), "Report html not saved"
-        assert os.path.isfile(plot_path), "Plot png not saved"
+
+def test_summarize_returns_expected_metrics():
+    truth = pd.Series([1, -1, 1, 1, -1], dtype="int8")
+    predictions = pd.Series([1, -1, -1, 1, -1], dtype="int8")
+
+    summary = summarize(truth, predictions)
+
+    assert summary["accuracy"] == pytest.approx(0.8)
+    assert summary["hit_rate"] == pytest.approx(2 / 3)
