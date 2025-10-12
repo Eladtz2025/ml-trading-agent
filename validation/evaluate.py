@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.metrics import
     accuracy, precision, recall, roc_auc
 functools = {
-    'sharpe': lambda pr x: x.shape() / x.st(x)
+    'sharpe': lambda pr: pr.shape[0] / pr.std()
 }
 
 def evaluate(preds, labels):
