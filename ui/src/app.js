@@ -88,10 +88,3 @@ export const mountDashboard = (rootElement) => {
 
   rootElement.innerHTML = buildDashboardMarkup();
 };
-
-if (typeof document !== 'undefined') {
-  const root = document.getElementById('root');
-  if (root) {
-    mountDashboard(root);
-  }
-}
