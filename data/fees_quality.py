@@ -29,6 +29,21 @@ class FeeQualityReport:
         )
 
 
+@dataclass
+class FeeQualityOutcome:
+    """Container holding summary statistics and anomaly mask."""
+
+    report: FeeQualityReport
+    anomalies: pd.Series
+
+    def to_frame(self) -> pd.DataFrame:
+        """Return a dataframe combining the report with anomaly counts."""
+
+        frame = self.report.to_frame().copy()
+        frame["anomaly_count"] = int(self.anomalies.sum())
+        return frame
+
+
 def _detect_extreme_spikes(series: pd.Series, threshold: float = 5.0) -> int:
     returns = series.pct_change(fill_method=None).abs()
     return int((returns > threshold).sum())
@@ -78,3 +93,16 @@ def detect_fee_anomalies(df: pd.DataFrame, column: str = "fees", z_threshold: fl
     pct_changes = fees.pct_change(fill_method=None).fillna(0.0).abs()
     mask = pct_changes > z_threshold
     return pd.Series(mask, index=df.index, name="fee_anomaly")
+
+
+def validate_fee_history(
+    df: pd.DataFrame,
+    *,
+    column: str = "fees",
+    z_threshold: float = 4.0,
+) -> FeeQualityOutcome:
+    """Run fee quality evaluation and anomaly detection in a single call."""
+
+    report = evaluate_fee_quality(df, column=column)
+    anomalies = detect_fee_anomalies(df, column=column, z_threshold=z_threshold)
+    return FeeQualityOutcome(report=report, anomalies=anomalies)

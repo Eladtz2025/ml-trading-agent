@@ -5,28 +5,28 @@ Foundation:
 
 Data:
   status: done
-  next_step: "add synthetic stream tags, live data"
-  notes: "sanity checks against time, returns anomalies, and levels"
+  next_step: null
+  notes: "synthetic/live tagging supported via data/live.py"
 
 Features:
   status: done
-  next_step: "monitor training drifts (PSI/KS) through monitor/"
-  notes: "Monitor training drifts and variable selection"
+  next_step: null
+  notes: "MACD/ATR plugins regression-tested"
 
 Labeling:
   status: done
-  next_step: "evaluate label confidence scores or long-term return threshold"
-  notes: "regional labeling markers required (long-term data)"
+  next_step: null
+  notes: "confidence scoring + threshold re-evaluation implemented"
 
 Prediction:
   status: done
-  next_step: "consolidate model output series ’ signals/returns"
-  notes: "Model.predict, hoze registered in modules
+  next_step: null
+  notes: "model exports include signals and returns parquet"
 
 Backtest:
   status: done
-  next_step: enable parameterized latency + slippage + capital config
-  notes: "Realistic entry-after-signal; next-open only"
+  next_step: null
+  notes: "parameterised latency/slippage/capital validated"
 
 Validation:
   status: done
@@ -45,12 +45,12 @@ Reports:
 
 Telemetry:
   status: done
-  next_step: "create monitor with PSI/KS in monitor/"
-  notes: "drift testing applied to stacked models/singles"
+  next_step: null
+  notes: "monitoring exports include PSI/KS alerts"
 Infra:
   status: done
-  next_step: "standardize CLI entry, render, config, env"
-  notes: "Docker, PIP, stag/baseline/tests"
+  next_step: null
+  notes: "no outstanding infra actions"
 Decisions:
   status: done
   next_step: none

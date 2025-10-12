@@ -31,7 +31,7 @@ def test_export_predictions_saves_signals_and_returns(tmp_path: Path) -> None:
     signals = pd.Series([0.1, -0.2, 0.05], name="signal")
     returns = pd.Series([0.01, -0.02, 0.03], name="returns")
 
-    export_predictions(
+    result = export_predictions(
         signals,
         returns,
         directory=tmp_path,
@@ -44,6 +44,8 @@ def test_export_predictions_saves_signals_and_returns(tmp_path: Path) -> None:
 
     assert parquet_path.exists()
     assert meta_path.exists()
+    assert result.dataset_path == parquet_path
+    assert result.metadata_path == meta_path
 
     frame = pd.read_parquet(parquet_path)
     assert list(frame.columns) == ["signal", "returns"]

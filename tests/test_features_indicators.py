@@ -25,6 +25,8 @@ def test_macd_outputs_expected_columns() -> None:
     assert list(result.columns) == ["macd", "signal", "hist"]
     # sanity check non-zero values
     assert pytest.approx(result["macd"].iloc[-1], rel=1e-4) != 0
+    assert result["macd"].iloc[-1] == pytest.approx(0.978353, rel=1e-6)
+    assert result["hist"].iloc[-1] == pytest.approx(0.403817, rel=1e-6)
 
 
 def test_atr_requires_columns() -> None:
@@ -38,3 +40,4 @@ def test_atr_returns_positive_series() -> None:
 
     assert "atr" in result.columns
     assert (result["atr"] >= 0).all()
+    assert result["atr"].iloc[-1] == pytest.approx(2.1, rel=1e-6)

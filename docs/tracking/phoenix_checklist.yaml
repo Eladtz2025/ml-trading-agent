@@ -7,19 +7,19 @@ Foundation:
   notes: full architecture blueprint converted
 
 Data:
-  status: inprogress
-  next_step: validate feeds quality/anomaly
-  notes: parquet-live/training/dataset tracked
+  status: done
+  next_step: null
+  notes: fee validation + anomaly scans implemented in data/fees_quality.py
 
 Features:
   status: done
-  next_step: macd/atr plugins
-  notes: includes innovative technicals like rolling variance
+  next_step: null
+  notes: macd/atr plugins shipped with regression coverage
 
 Labeling:
   status: done
-  next_step: confidence scores / long-term threshold
-  notes: triple-barrier supported
+  next_step: null
+  notes: confidence scores + threshold re-evaluation utilities available
 
 Models:
   status: done
@@ -28,13 +28,13 @@ Models:
 
 Backtest:
   status: done
-  next_step: enable latency + slippage + capital config
-  notes: "Realistic entry-after-signal; next-open only"
+  next_step: null
+  notes: parameterised latency/slippage/capital with next-open fills
 
 Tables:
   status: done
-  next_step: Refactoring with expected variances + summary stats
-  notes: dataaudit tables refactored replaces risk/trading states
+  next_step: null
+  notes: metrics table includes sharpe/calmar/drawdown/turnover alignment
 
 Validation:
   status: done
@@ -52,13 +52,13 @@ Reports:
 
 Monitor:
   status: done
-  next_step: "create monitor with PSJ/KS in monitor/"
-  notes: "drift testing applied to stacked models/singles"
+  next_step: null
+  notes: PSI/KS drift alerts integrated into monitoring flow
 
 Compliance:
   status: done
-  next_step: regulatory contracts + spec mapping
-  notes: "ESMA/FINRA/MIBID minimum-required"
+  next_step: null
+  notes: compliance.md expanded with SEC/ESMA research guidance
 Infra:
   status: done
   next_step: "standardize CLI entry, render, config, env"

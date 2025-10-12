@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Iterable, Mapping
+from typing import Dict, Iterable, Literal, Mapping
 
 import pandas as pd
 
@@ -17,6 +17,7 @@ class StreamTag:
     name: str
     description: str
     schema: Mapping[str, str]
+    kind: Literal["synthetic", "live"] = "live"
 
 
 @dataclass
@@ -25,11 +26,19 @@ class LiveIngestionManager:
 
     root: Path
     tags: Dict[str, StreamTag] = field(default_factory=dict)
+    mode: Literal["research", "live"] = "research"
 
     def register_tag(self, tag: StreamTag) -> None:
         if tag.name in self.tags:
             raise ValueError(f"Tag '{tag.name}' already registered")
         self.tags[tag.name] = tag
+
+    def set_mode(self, mode: Literal["research", "live"]) -> None:
+        """Change the default ingestion mode."""
+
+        if mode not in {"research", "live"}:
+            raise ValueError("Mode must be either 'research' or 'live'")
+        self.mode = mode
 
     def ensure_registered(self, tag_name: str) -> StreamTag:
         try:
@@ -37,13 +46,23 @@ class LiveIngestionManager:
         except KeyError as exc:  # pragma: no cover - defensive
             raise KeyError(f"Tag '{tag_name}' is not registered") from exc
 
-    def ingest_records(self, tag_name: str, records: Iterable[Mapping[str, object]]) -> Path:
+    def ingest_records(
+        self,
+        tag_name: str,
+        records: Iterable[Mapping[str, object]],
+        *,
+        mode: Literal["research", "live"] | None = None,
+    ) -> Path:
         """Append streaming records to the parquet log for ``tag_name``."""
 
         tag = self.ensure_registered(tag_name)
         frame = pd.DataFrame(list(records))
         if frame.empty:
             raise ValueError("No records provided for ingestion")
+
+        ingest_mode = mode or self.mode
+        if ingest_mode not in {"research", "live"}:
+            raise ValueError("Mode must be either 'research' or 'live'")
 
         missing = set(tag.schema).difference(frame.columns)
         if missing:
@@ -53,6 +72,9 @@ class LiveIngestionManager:
             frame[column] = frame[column].astype(dtype)
 
         frame["ingested_at"] = datetime.utcnow()
+        frame["stream_tag"] = tag.name
+        frame["stream_kind"] = tag.kind
+        frame["ingest_mode"] = ingest_mode
 
         destination = self.root / f"{tag_name}.parquet"
         destination.parent.mkdir(parents=True, exist_ok=True)

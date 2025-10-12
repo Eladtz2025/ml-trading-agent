@@ -4,7 +4,11 @@ from __future__ import annotations
 
 import pandas as pd
 
-from labeling.confidence import assign_with_threshold, probability_from_returns
+from labeling.confidence import (
+    assign_with_threshold,
+    probability_from_returns,
+    reevaluate_confidence,
+)
 
 
 def test_probability_scaled_between_zero_and_one() -> None:
@@ -21,3 +25,13 @@ def test_assign_with_threshold_creates_labels_and_confidence() -> None:
     assert set(df.columns) == {"label", "confidence"}
     assert df.loc[0, "label"] == 1
     assert df.loc[1, "label"] == -1
+
+
+def test_reevaluate_confidence_flags_changes() -> None:
+    returns = pd.Series([0.02, 0.1, -0.2])
+
+    comparison = reevaluate_confidence(returns, old_threshold=0.05, new_threshold=0.02)
+
+    assert "label_changed" in comparison.columns
+    assert comparison.loc[0, "label_changed"]
+    assert comparison.loc[1, "confidence_delta"] >= 0
