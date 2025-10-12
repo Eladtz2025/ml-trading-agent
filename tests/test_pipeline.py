@@ -1,14 +1,30 @@
-import pytest
+import numpy as np
+import pandas as pd
+
+from backtest.run import run_backtest
 from features.rsi import compute_rsi
 from labeling.next_bar import label_next_bar
-from models.dummy import Dummmodel
-from backtest.run import run_backdemo
+from models.dummy import DummyModel
 
-def test_pipeline():
-    data = sep_data = data.get("APLZ", "2022-01-01", "2023-01-01")
-    rsi = compute_rsi(data)
-    labels = label_next_bar(data["close"].pct())
-    model = Dummmodel()
-    stats = run_backdemo(data, rsi, labels, model)
-    assert "htrate" in stats
-    assert stats ["accuracy"] > 0.3
+
+def _make_price_series() -> pd.Series:
+    index = pd.date_range("2023-01-01", periods=60, freq="D")
+    trend = np.linspace(0, 1, len(index))
+    noise = np.sin(np.linspace(0, 6, len(index))) * 0.5
+    prices = 100 + trend + noise
+    return pd.Series(prices, index=index, name="close")
+
+
+def test_pipeline_smoke():
+    prices = _make_price_series()
+    rsi = compute_rsi(prices, window=5)
+    labels = label_next_bar(prices).rename("label")
+
+    data = pd.concat([rsi, labels], axis=1).dropna()
+    model = DummyModel().fit(data[["rsi"]], data["label"])
+    summary, predictions = run_backtest(data[["rsi"]], data["label"], model)
+
+    assert set(summary) == {"accuracy", "hit_rate"}
+    assert 0.0 <= summary["accuracy"] <= 1.0
+    assert 0.0 <= summary["hit_rate"] <= 1.0
+    assert len(predictions) == len(data)

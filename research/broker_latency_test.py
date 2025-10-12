@@ -1,17 +1,21 @@
 import time
+
 from infra.brokers.sim_ibkr import SimIBKRBroker
 
-broker = SimIBKRBroker()
 
-durs = []
+def _measure_latency(iterations: int = 25) -> float:
+    broker = SimIBKRBroker(initial_cash=10_000)
+    durations = []
 
-for _ in range(100):
-    order = { 'sid': 'SPY', 'quantity': 10, 'price': 150, 'filled': False }
-    st = time.time()
-    broker.submit_order(order)
-    fills = broker.get_fills()
-    et = time.time()
-    durs.append(et - st)
+    for _ in range(iterations):
+        start = time.perf_counter()
+        broker.submit_order({"symbol": "SPY", "quantity": 1, "price": 150})
+        broker.get_fills()
+        durations.append(time.perf_counter() - start)
 
-print("Latency sess:", sum(durs) / len(durs))
-print("STDN:", pd.std(durs))
+    return sum(durations) / len(durations)
+
+
+def test_sim_ibkr_latency_is_small():
+    latency = _measure_latency()
+    assert latency < 0.001
