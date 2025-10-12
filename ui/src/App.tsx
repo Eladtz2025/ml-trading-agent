@@ -14,3 +14,11 @@ export function mountPhoenixDashboard(root?: HTMLElement | null): void {
 
 export default mountPhoenixDashboard;
 export { mountDashboard };
+import React from 'react';
+import Dashboard from './components/Dashboard';
+
+const App: React.FC = () => {
+  return <Dashboard />;
+};
+
+export default App;
