@@ -15,7 +15,7 @@ jobs:
         run: pip install ruff mypy yamllint jsonlint
 
       - name: Validate Python
-        run: ruff .
+        run: ruff check .
 
       - name: Validate YAML
         run: yamllint .
