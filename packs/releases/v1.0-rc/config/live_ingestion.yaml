@@ -1,0 +1,10 @@
+research_mode: true
+streams:
+  - name: synthetic_prices
+    tag: synthetic_prices
+    schema:
+      symbol: string
+      price: float
+monitoring:
+  psi_threshold: 0.2
+  ks_threshold: 0.3

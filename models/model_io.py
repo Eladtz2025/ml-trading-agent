@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import pickle
+import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Mapping, Optional
@@ -26,6 +27,13 @@ def _build_version_id(config: Mapping[str, Any]) -> str:
     return digest[:12]
 
 
+def _git_revision() -> str:
+    try:
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    except Exception:  # pragma: no cover - fallback for non-git envs
+        return "unknown"
+
+
 def save_model(model: Any, directory: str | os.PathLike[str], config: Mapping[str, Any] | None = None) -> str:
     """Serialise ``model`` to ``directory`` and return the generated version id."""
 
@@ -40,8 +48,15 @@ def save_model(model: Any, directory: str | os.PathLike[str], config: Mapping[st
         pickle.dump(model, fh)
 
     metadata_path = target_dir / f"model_{version_id}.json"
+    metadata = {
+        "config": normalised_config,
+        "version_id": version_id,
+        "saved_at": datetime.utcnow().isoformat(timespec="seconds"),
+        "git_revision": _git_revision(),
+    }
+
     with metadata_path.open("w", encoding="utf-8") as fh:
-        json.dump({"config": normalised_config, "version_id": version_id}, fh, indent=2)
+        json.dump(metadata, fh, indent=2)
 
     return version_id
 

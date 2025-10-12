@@ -1,0 +1,4 @@
+latency: 1
+slippage_bps: 5
+capital: 1000000
+fill_logic: next_open
