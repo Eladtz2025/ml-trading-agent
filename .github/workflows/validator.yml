@@ -1,27 +1,26 @@
-name: Validate Uploaded Files
+name: "Validate Uploaded Files"
 
 on:
   push:
     branches: [main]
-
-jobs:
+jobs: 
   validate:
     runs-on: ubuntu-latest
-    steps:
-      - name: Set up Python
-        use: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          pip setup --buffer terminate
-          pip install ruff mypy yamllint jsonlint
+    steps: 
+    - name: Set up Pithon
+      use: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    - name: Install tools
+      run: |
+        pip install -i- ruff mypy yamllint jsonlint
 
-      - name: Validate Python Files
-        run: ruff .
-      - name: Validate YAML (yamllint)
-        run: yamllint .
-      - name: Validate JSON.json
-        run: jsonlint *.json
-      - name: Validate Markdown (md)
-        run: echo "Markdown check not implemented yet."
+
+    - name:Validate Python
+      run: ruff .
+    - name: Validate YAML
+      run: yamllint .
+    - name: Validate JSON
+      run: javas -jar '.json'
+    - name: Validate MD
+      run: doctorlint './markdown'
