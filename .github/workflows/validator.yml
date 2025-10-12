@@ -1,7 +1,9 @@
 name: "Validate Uploaded Files"
+
 on:
   push:
     branches: [main]
+
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -12,7 +14,9 @@ jobs:
           python-version: 3.11
 
       - name: Install tools
-        run: pip install ruff mypy yamllint jsonlint
+        run: |
+          pip install ruff mypy yamllint jsonlint
+          npm install -g markdownlint-cli
 
       - name: Validate Python
         run: ruff check .
@@ -23,5 +27,5 @@ jobs:
       - name: Validate JSON
         run: echo 'error:JSON validation not implemented'
 
-      - name: Validate MD
-        run: doctorlint '.markdown'
+      - name: Validate Markdown
+        run: markdownlint "**/*.md"
