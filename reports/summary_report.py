@@ -4,9 +4,11 @@ from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
-from typing import Mapping
+from typing import Mapping, Optional
 
 import pandas as pd
+
+from .metrics_table import build_metrics_table
 
 DEFAULT_FILE = Path("cache/reports") / f"summary_{datetime.utcnow().date()}.md"
 
@@ -15,6 +17,7 @@ def write_report(
     val_res: Mapping[str, float],
     rsk_res: Mapping[str, float],
     trd_res: pd.Series,
+    backtest_frame: Optional[pd.DataFrame] = None,
     path: Path = DEFAULT_FILE,
 ) -> Path:
     lines = ["## Summary Report", ""]
@@ -32,6 +35,12 @@ def write_report(
     lines.append("### Trading")
     for idx, value in trd_res.items():
         lines.append(f"- **{idx}**: {float(value):.4f}")
+
+    if backtest_frame is not None and not backtest_frame.empty:
+        metrics = build_metrics_table(backtest_frame)
+        lines.append("")
+        lines.append("### Performance Metrics")
+        lines.append(metrics.to_markdown(index=False))
 
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")
