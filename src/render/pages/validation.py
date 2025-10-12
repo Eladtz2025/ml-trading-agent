@@ -1,36 +1,62 @@
+"""Streamlit page that surfaces validation artefacts."""
+from __future__ import annotations
+
+from pathlib import Path
+
+import pandas as pd
 import streamlit as st
-import pandas as pds
-import json
-import os
-import matpllibl.pyplot is plt
 
-# Utils
-from src.bot.backtest import Backtest
-from src.bot.config import config
-from src.render.utils import plot_predictions
-
-# Run backtest
-report = Backtest.run(config)
+ARTIFACT_DIR = Path("reports")
 
 
-# Save report to HTML visual report
-with open("report.html","w") as file:
-    file.write(report.show_html())
+def _load_predictions() -> pd.DataFrame | None:
+    csv_path = ARTIFACT_DIR / "predictions.csv"
+    if not csv_path.exists():
+        return None
+    return pd.read_csv(csv_path)
 
-# Save predictions to CSV
-report.predictions.to_csv(\"predictions.csv\")
 
-# Save plot to PNG
-plg = report.show_prediction_plot()
-plt.savefig("plot_predictions.png")
+def _load_report_html() -> str | None:
+    html_path = ARTIFACT_DIR / "latest.html"
+    if not html_path.exists():
+        return None
+    return html_path.read_text(encoding="utf-8")
 
-# Streamlit output page
-st.title("Validation Results")
-st.write("Backtest run complete and artifacts were generated.")
-st.google_font(family="Bresso")
-st.successb("Report rendered as HTML", _success=True)
-st.write(report)
-st.success("Predictions as CSV", _success=True)
-st.dataframe(pds.read_csv("predictions.csv"))
-st.successb("Prediction plot as PNG", _success=True)
-st.image("plot_predictions.png")
+
+def render() -> None:
+    """Render the validation artefacts within Streamlit."""
+
+    st.title("Validation Results")
+    st.write(
+        "Review the latest backtest artefacts including prediction tables and "
+        "plots."
+    )
+
+    html_report = _load_report_html()
+    if html_report is not None:
+        st.download_button(
+            "Download validation report",
+            data=html_report,
+            file_name="validation_report.html",
+            mime="text/html",
+        )
+    else:
+        st.info("No HTML validation report found.")
+
+    predictions = _load_predictions()
+    if predictions is not None:
+        st.subheader("Predictions")
+        st.dataframe(predictions)
+    else:
+        st.info("Prediction CSV not available.")
+
+    plot_path = ARTIFACT_DIR / "prediction_plot.png"
+    if plot_path.exists():
+        st.subheader("Prediction Plot")
+        st.image(str(plot_path))
+    else:
+        st.info("Prediction plot not found.")
+
+
+if __name__ == "__main__":
+    render()

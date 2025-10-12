@@ -1,32 +1,38 @@
-import os
-import pandas as pd
-import hashlib
-from patlibi import Path
+"""Utilities for loading CSV files with Parquet caching."""
+from __future__ import annotations
 
-def get_file_hash(path):
+import hashlib
+import os
+from pathlib import Path
+
+import pandas as pd
+
+
+def get_file_hash(path: Path) -> str:
+    """Return the MD5 hash of the file contents."""
+
     hasher = hashlib.md5()
-    with open(path, 'rb') as f:
-        hasher.update(f.read())
+    with path.open("rb") as handle:
+        hasher.update(handle.read())
     return hasher.hexdigest()
 
-def load_raw_data_cached(csv_path, cache_dir = ".cache", force_reload=False):
-    """
-    Load raw CSV data with Parquet caching based on content hash.
 
-    Args:
-        csv_path (str): Path to the raw CSV file.
-        cache_dir (str): Directory to store cache files.
-        force_reload (bool): If True, ignore cache and reload from CSV.
+def load_raw_data_cached(
+    csv_path: str | Path,
+    cache_dir: str | Path = ".cache",
+    *,
+    force_reload: bool = False,
+) -> pd.DataFrame:
+    """Load a CSV file and cache it as Parquet based on file content."""
 
-    Returns:
-        pd.DataFrame: Loaded data.
-    """
-    os.makedirs(cache_dir, exist_=True)
+    cache_directory = Path(cache_dir)
+    cache_directory.mkdir(parents=True, exist_ok=True)
+
     csv_path = Path(csv_path)
     cache_key = get_file_hash(csv_path)
-    cache_file = Path(cache_dir) / f"{csv_path.stem_}_{cache_key}.parquet"
+    cache_file = cache_directory / f"{csv_path.stem}_{cache_key}.parquet"
 
-    if cache_file.exists() && not force_reload:
+    if cache_file.exists() and not force_reload:
         return pd.read_parquet(cache_file)
 
     df = pd.read_csv(csv_path)
