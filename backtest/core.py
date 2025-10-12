@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from typing import Literal
 
 import pandas as pd
@@ -16,6 +16,17 @@ class BacktestConfig:
     slippage_bps: float = 0.0
     capital: float = 1_000_000.0
     fill_logic: Literal["close", "next_open"] = "next_open"
+
+    @classmethod
+    def from_dict(cls, payload: dict[str, float | int | str]) -> "BacktestConfig":
+        """Build a config object from a dictionary payload."""
+
+        return cls(**payload)
+
+    def to_dict(self) -> dict[str, float | int | str]:
+        """Return the configuration as a dictionary."""
+
+        return asdict(self)
 
 
 def _apply_slippage(price: pd.Series, slippage_bps: float) -> pd.Series:

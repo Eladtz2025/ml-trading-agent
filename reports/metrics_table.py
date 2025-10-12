@@ -10,7 +10,7 @@ import pandas as pd
 def _max_drawdown(equity: pd.Series) -> float:
     running_max = equity.cummax()
     drawdowns = equity / running_max - 1.0
-    return float(drawdowns.min())
+    return float(abs(drawdowns.min()))
 
 
 def build_metrics_table(
@@ -31,9 +31,9 @@ def build_metrics_table(
     volatility = strategy_returns.std(ddof=0) * math.sqrt(periods_per_year)
     sharpe = annualised_return / volatility if volatility else 0.0
     max_drawdown = _max_drawdown(equity_curve)
-    calmar = annualised_return / abs(max_drawdown) if max_drawdown else 0.0
+    calmar = annualised_return / max_drawdown if max_drawdown else 0.0
 
-    turnover = backtest_frame["position"].diff().abs().sum() / len(backtest_frame)
+    turnover = backtest_frame["position"].diff().abs().sum() / (2 * len(backtest_frame))
     avg_daily_pnl = pnl.mean()
 
     table = pd.DataFrame(

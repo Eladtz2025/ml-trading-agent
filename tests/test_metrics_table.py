@@ -31,6 +31,8 @@ def test_build_metrics_table_outputs_expected_columns() -> None:
         "annual_return",
     ]
     assert table.iloc[0]["turnover"] >= 0
+    assert table.iloc[0]["max_drawdown"] >= 0
+    assert table.iloc[0]["calmar"] != 0
 
 
 def test_build_metrics_table_raises_for_empty_frame() -> None:

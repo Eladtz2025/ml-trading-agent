@@ -32,3 +32,19 @@ def assign_with_threshold(returns: pd.Series, threshold: float) -> pd.DataFrame:
         "label": labels,
         "confidence": confidence,
     })
+
+
+def reevaluate_confidence(
+    returns: pd.Series,
+    *,
+    old_threshold: float,
+    new_threshold: float,
+) -> pd.DataFrame:
+    """Re-evaluate label assignments under a new threshold and highlight changes."""
+
+    previous = assign_with_threshold(returns, old_threshold)
+    updated = assign_with_threshold(returns, new_threshold)
+    comparison = updated.copy()
+    comparison["label_changed"] = previous["label"] != updated["label"]
+    comparison["confidence_delta"] = updated["confidence"] - previous["confidence"]
+    return comparison

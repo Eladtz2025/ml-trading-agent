@@ -3,11 +3,18 @@
 from __future__ import annotations
 
 import json
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Mapping
 
 import pandas as pd
+
+
+@dataclass
+class ExportResult:
+    dataset_path: Path
+    metadata_path: Path
 
 
 def export_predictions(
@@ -35,4 +42,4 @@ def export_predictions(
     }
     metadata_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
-    return dataset_path
+    return ExportResult(dataset_path=dataset_path, metadata_path=metadata_path)
