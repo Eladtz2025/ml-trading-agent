@@ -1,10 +1,8 @@
 """Utilities for loading CSV files with Parquet caching."""
 
-from __future__ import annotations
-
 import hashlib
 from pathlib import Path
-from typing import Final
+from typing import Final, Union
 
 import pandas as pd
 
@@ -29,8 +27,8 @@ def _build_cache_path(csv_path: Path, cache_dir: Path, file_hash: str) -> Path:
 
 
 def load_raw_data_cached(
-    csv_path: str | Path,
-    cache_dir: str | Path = DEFAULT_CACHE_DIR,
+    csv_path: Union[str, Path],
+    cache_dir: Union[str, Path] = DEFAULT_CACHE_DIR,
     *,
     force_reload: bool = False,
 ) -> pd.DataFrame:
