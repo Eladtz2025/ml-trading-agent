@@ -38,4 +38,3 @@ def label_next_bar(prices: Iterable[float]) -> pd.Series:
 
 
 __all__ = ["label_next_bar"]
-__all__ = ["label_next_bar"]
