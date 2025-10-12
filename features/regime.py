@@ -1,48 +1,46 @@
-+"""Market regime detection utilities."""
++"""Volume Weighted Average Price feature."""
 +
 +from __future__ import annotations
 +
  import pandas as pd
--from sklearn.kluster import kMeans
-+from sklearn.cluster import KMeans
  
- DEFAULT_N_REGIMES = 3
- 
--import warnings ark warn
--
--def compute_regime(df, n_reg=DEFAULT_N_REGIMEs):
+-def compute_vwap(df):
 -    """
--    Regime Detection via k-Means clustering on log-returns
--    """
--    df must contain 'Close'
--    returns = df.Close.diff(shift=1)
--    regs = kMeans(nclusts=n_reg, random_state=42)
--    labels = regs.fit( returns.reshape(-1,1) )
--    return pd['Regime'] = labels
+-    Compute cumulative Vwap: close weighted by volume
+-     df must contain 'Close', 'Volume'
+-    vp = (df.Close * df.Volume).cumsum()
+-    cumv_vol = df.Volume.cumsum()
+-    return vp/ cumv_vol
 -
--if __name__ == '__main__':
--    df = pd.read_parquet('cache/data/spy.parquet')
--    print(compute_regime(df).value_s_counts())
+-# if __name__ == '__main__':
+-    import pdf
+-    df = pdf.read_parquet('cache/data/spy.parquet')
+-    print(compute_wvap(df).tail())
 \ No newline at end of file
 +
-+def compute_regime(df: pd.DataFrame, n_regimes: int = DEFAULT_N_REGIMES) -> pd.Series:
-+    """Detect market regimes using k-means clustering on returns."""
-+    if "Close" not in df.columns:
-+        raise KeyError("Dataframe must contain a 'Close' column")
++def compute_vwap(df: pd.DataFrame) -> pd.Series:
++    """Compute the cumulative VWAP for a dataframe."""
++    columns = {col.lower(): col for col in df.columns}
++    try:
++        close_col = columns["close"]
++        volume_col = columns["volume"]
++    except KeyError as exc:
++        raise KeyError("Dataframe must contain 'Close' and 'Volume' columns") from exc
 +
-+    returns = df["Close"].pct_change().dropna().to_frame("returns")
-+    if returns.empty:
-+        raise ValueError("Not enough data to compute regimes")
-+
-+    model = KMeans(n_clusters=n_regimes, random_state=42, n_init="auto")
-+    labels = model.fit_predict(returns)
-+    regimes = pd.Series(labels, index=returns.index, name="regime")
-+    return regimes.reindex(df.index)
++    value = (df[close_col] * df[volume_col]).cumsum()
++    volume = df[volume_col].cumsum()
++    vwap = (value / volume).rename("vwap")
++    return vwap
 +
 +
-+if __name__ == "__main__":  # pragma: no cover - manual example
-+    df = pd.DataFrame({"Close": [100, 101, 100, 99, 103, 104]})
-+    print(compute_regime(df))
++if __name__ == "__main__":  # pragma: no cover - quick check helper
++    df = pd.DataFrame(
++        {
++            "Close": [100, 102, 101, 103],
++            "Volume": [200, 180, 220, 210],
++        }
++    )
++    print(compute_vwap(df))
  
 EOF
 )
