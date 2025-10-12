@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python
-        use: actions/setup-python@v4
+        uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
@@ -21,7 +21,7 @@ jobs:
         run: yamllint .
 
       - name: Validate JSON
-        run: echo 'error: JSON validation not implemented'
+        run: echo 'error:JSON validation not implemented'
 
       - name: Validate MD
         run: doctorlint '.markdown'
