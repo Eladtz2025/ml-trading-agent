@@ -1,0 +1,276 @@
+:root {
+  color-scheme: dark;
+  --bg: #05060f;
+  --surface: #0d1020;
+  --surface-alt: #12162a;
+  --surface-hover: #1b2038;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text-primary: #f5f7ff;
+  --text-secondary: rgba(238, 240, 255, 0.68);
+  --accent: #7c5cff;
+  --accent-soft: rgba(124, 92, 255, 0.16);
+  --accent-strong: rgba(124, 92, 255, 0.32);
+  --success: #48e9a6;
+  --muted: rgba(255, 255, 255, 0.12);
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top left, rgba(124, 92, 255, 0.15), transparent 45%),
+    radial-gradient(circle at top right, rgba(72, 233, 166, 0.12), transparent 40%), var(--bg);
+  color: var(--text-primary);
+}
+
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.hero {
+  background: linear-gradient(135deg, rgba(15, 19, 40, 0.85), rgba(14, 12, 30, 0.85));
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  box-shadow: 0 40px 80px rgba(4, 5, 12, 0.55);
+}
+
+.hero .eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin: 0 0 0.75rem;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 2.8rem);
+}
+
+.hero .subtitle {
+  margin: 0.75rem 0 0;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 52ch;
+}
+
+.hero-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hero-nav__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  background: var(--surface-alt);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-nav__link:hover,
+.hero-nav__link:focus-visible {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+  border-color: var(--accent-soft);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.dashboard-section {
+  background: rgba(9, 11, 24, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 2.25rem;
+  box-shadow: 0 24px 64px rgba(3, 6, 16, 0.55);
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.65rem;
+}
+
+.section-header p {
+  margin: 0.5rem 0 0;
+  color: var(--text-secondary);
+  max-width: 60ch;
+  line-height: 1.5;
+}
+
+.section-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.component-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.component-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 190px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.component-card:hover,
+.component-card:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--accent-soft);
+  box-shadow: 0 24px 40px rgba(6, 8, 20, 0.45);
+}
+
+.component-card header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.component-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.component-kind {
+  align-self: flex-start;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.component-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.component-card footer {
+  margin-top: auto;
+}
+
+.component-action {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 0.55rem 0.95rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.component-action:hover,
+.component-action:focus-visible {
+  background: var(--accent-strong);
+  border-color: var(--accent);
+}
+
+.component-card--chart {
+  background: linear-gradient(180deg, rgba(124, 92, 255, 0.08), transparent), var(--surface);
+}
+
+.component-card--stat {
+  background: linear-gradient(180deg, rgba(72, 233, 166, 0.12), transparent), var(--surface);
+}
+
+.component-card--timeline {
+  background: linear-gradient(180deg, rgba(255, 206, 86, 0.1), transparent), var(--surface);
+}
+
+.component-card--control {
+  background: linear-gradient(180deg, rgba(255, 118, 117, 0.14), transparent), var(--surface);
+}
+
+.component-card--distribution {
+  background: linear-gradient(180deg, rgba(0, 181, 204, 0.12), transparent), var(--surface);
+}
+
+.component-card--text {
+  background: linear-gradient(180deg, rgba(255, 121, 198, 0.12), transparent), var(--surface);
+}
+
+.component-card--gauge {
+  background: linear-gradient(180deg, rgba(255, 211, 42, 0.12), transparent), var(--surface);
+}
+
+.app-footer {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  padding-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .hero {
+    padding: 2rem;
+  }
+
+  .dashboard-section {
+    padding: 1.75rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .section-count {
+    align-self: flex-start;
+  }
+}
