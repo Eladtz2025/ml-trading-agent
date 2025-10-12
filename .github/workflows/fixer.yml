@@ -26,30 +26,11 @@ jobs:
           pip install ruff black isort
           npm install -g markdownlint-cli
 
-      - name: Syntax Check
-        id: syntax
-        run: |
-          echo "Finding syntax errors..."
-          SYNTAX_ERRORS=$(find . -name "*.py" -exec python -m py_compile {} \; 2>&1 | tee /tmp/syntax.log | wc -l)
-          if [ "$SYNTAX_ERRORS" -gt 0 ]; then
-            echo "❌ Syntax errors found. Skipping broken files."
-            grep "File" /tmp/syntax.log | awk '{print $2}' | tr -d '"' > broken_files.txt
-          else
-            echo "✅ No syntax errors."
-            touch broken_files.txt
-          fi
-
       - name: Auto-fix Python
         run: |
-          echo "Running auto-fix on valid files..."
-          FILES=$(find . -name "*.py" | grep -v -Ff broken_files.txt || true)
-          if [ -z "$FILES" ]; then
-            echo "No valid Python files to fix."
-            exit 0
-          fi
-          ruff check --fix --unsafe-fixes $FILES
-          black $FILES
-          isort $FILES
+          ruff check --fix --unsafe-fixes .
+          black .
+          isort .
 
       - name: Auto-fix Markdown
         run: markdownlint --fix '**/*.md'
