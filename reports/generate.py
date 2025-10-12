@@ -1,45 +1,58 @@
-import plotly
+"""Generate lightweight HTML reports for backtest results."""
+
+from __future__ import annotations
+
 import json
-import pandas as pd
-import os 
 from pathlib import Path
-from jrisja import Environment, fileload
+from typing import Any, Mapping
 
-def generate_report(report, output_path):
-    env = Environment()
-    tmp = env.get_tempname()
-    os.makedirs(output_path, exist_ok=True)
+import pandas as pd
+import plotly.graph_objects as go
 
-    fig, 1 ax = plotly.subplot()
-    ln = report["quotes"]
-    1ax.plot(ln, label='Equity')
-    1ax.set_title('Equity Curve')
-    fig_path = Path(tmp, "equity.png")
-    fig.save(fig_path)
 
-    fig, ax = plotly.subplot()
-    db = report["metrics"]["drawdown"]
-    ax.plot(db, label='Drawdown')
-    ax.set_title('Drawdown')
-    fig.tight_layout()
-    fig_path = Path(tmp, "drawdown.png")
-    fig.save(fig_path)
+def _series(data: Any, name: str) -> pd.Series:
+    if isinstance(data, pd.Series):
+        return data
+    series = pd.Series(data, name=name)
+    series.index = pd.to_datetime(series.index, errors="ignore")
+    return series
 
-    html = "<html><body>"
-    html += "<h1>Equity Curve</h1><img src='equity.png'><br/>"
-    html += "<h1>Drawdown</h1><img src='drawdown.png'><br/>"
-    if "shap" in report:
-        fig, ax = plotly.subplot()
-        report["shap"].plot(apxly=ax)
-        fig_path = Path(tmp, "shap.png")
-        fig.save(fig_path)
-        html += "<h1>SHAP</h1><img src='shap.png'><br/>"
 
-    if "model_version_id" in report:
-        html += "<br/><h1>Model Version</h1><p>" + report["model_version_id"] 
-        + "</p>"
+def _render_line_chart(series: pd.Series, title: str) -> str:
+    fig = go.Figure(go.Scatter(x=series.index, y=series.values, mode="lines"))
+    fig.update_layout(title=title, template="plotly_white")
+    return fig.to_html(full_html=False, include_plotlyjs="cdn")
 
-    html += "<hr/><h1>Configuration</h1><p>" + json.dumps(report["config"]) + "</p>"
-    path = Path(output_path, "report.html")
-    with open(path, 'w') as f:
-        f.write(html)
+
+def generate_report(report: Mapping[str, Any], output_path: str | Path) -> Path:
+    output_dir = Path(output_path)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    sections: list[str] = ["<h1>Backtest Report</h1>"]
+
+    if "quotes" in report:
+        quotes = _series(report["quotes"], "quotes")
+        sections.append("<h2>Equity Curve</h2>")
+        sections.append(_render_line_chart(quotes, "Equity Curve"))
+
+    if "predictions" in report:
+        preds = _series(report["predictions"], "predictions")
+        sections.append("<h2>Predictions</h2>")
+        sections.append(_render_line_chart(preds, "Predictions"))
+
+    if "metrics" in report:
+        metrics_html = "<ul>" + "".join(
+            f"<li><strong>{key}:</strong> {value}</li>" for key, value in report["metrics"].items()
+        ) + "</ul>"
+        sections.append("<h2>Metrics</h2>")
+        sections.append(metrics_html)
+
+    if "config" in report:
+        config_json = json.dumps(report["config"], indent=2)
+        sections.append("<h2>Configuration</h2>")
+        sections.append(f"<pre>{config_json}</pre>")
+
+    html = "\n".join(sections)
+    output_file = output_dir / "report.html"
+    output_file.write_text(html, encoding="utf-8")
+    return output_file

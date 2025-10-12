@@ -1,21 +1,40 @@
+"""Quick comparison of a simple RSI strategy versus an XGBoost model."""
+
+from __future__ import annotations
+
 import pandas as pd
-from data.import yfinance_download
-from features.import rsi
-from backtest.import run
-from models.import xgboost_model
 
-df = yfinance_download('SPY', days=300)
-df_rsi = rsi.compute(df)
-df = df_rsi.copy()
+from backtest.run import run_backtest
+from data.get_data_yahoo import fetch_data
+from features.rsi import compute_rsi
+from labeling.next_bar import label_next_bar
+from models.xgb import XGBModel
 
-df_rsi['rsi_signal'] = 0
-df [df_rsi['nrsi'] < 30] = 1
-df_rsi['rsi_signal'] = (df_rsi['rsi'] > 70) & df ['rsi_signal']
-df'model_prd'] = xgboost_model(df_rsi[[ 'RSI', 'RE" ]])
 
-config = { "commission": 0.005, "latency": 1 }
-metrrsi, dict_rsi = run(df, signals=df [ "rsi_signal" ], config=config)
-metrmod, dict_model = run(df, signals=df["close"] * df['model_prd'].sign()-0.5, config)
+def build_dataset(ticker: str, start: str = "2020-01-01", end: str = "2024-01-01") -> pd.DataFrame:
+    data = fetch_data(ticker, start, end)
+    frame = pd.DataFrame(index=data.index)
+    frame["close"] = data["Close"] if "Close" in data.columns else data["close"]
+    frame["rsi"] = compute_rsi(frame["close"])
+    frame["returns"] = frame["close"].pct_change().fillna(0)
+    frame["label"] = (label_next_bar(frame["close"]).reindex(frame.index).fillna(0) > 0).astype(int)
+    return frame.dropna()
 
-print("RSI:", metrrsi)
-print("MODEL: ", metrmod)
+
+def compare(ticker: str = "SPY") -> None:
+    dataset = build_dataset(ticker)
+    features = dataset[["rsi", "returns"]]
+    labels = dataset["label"].astype(int)
+
+    rsi_signal = (features["rsi"] < 30).astype(int)
+    rsi_accuracy = float((rsi_signal == labels).mean())
+
+    model = XGBModel()
+    model_summary, _ = run_backtest(features, labels, model)
+
+    print(f"RSI accuracy: {rsi_accuracy:.3f}")
+    print("Model summary:", model_summary)
+
+
+if __name__ == "__main__":  # pragma: no cover
+    compare()

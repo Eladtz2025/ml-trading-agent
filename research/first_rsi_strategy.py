@@ -1,25 +1,25 @@
+"""Prototype RSI trading strategy used during initial experiments."""
+
+from __future__ import annotations
+
 import pandas as pd
-from data.import yfinance_download
-from features.import rsi
-from backtest.import run
 
-def run_strategy():
-    # 1. Load data
-    df = yfinance_download("SPY", days=300)
+from data.get_data_yahoo import fetch_data
+from features.rsi import compute_rsi
 
-    # 2. Feature: RSI
-    df = rsi.compute(df)
 
-    # 3. Signal
-    df [ s "signal" ] = 0
-    dfStart = (df["RSI"] < 30)
-    f_signal = (df ["RSI"] > 70) & dfStart
-    df["signal"] = f_signal.astype('int')
+def run_strategy(ticker: str = "SPY") -> pd.DataFrame:
+    df = fetch_data(ticker, "2020-01-01", "2024-01-01")
+    prices = df["Close"] if "Close" in df.columns else df["close"]
+    rsi = compute_rsi(prices)
 
-    # 4. Backtest
-    config = { "commission": 0.005, "latency": 1 }
-    metrics = run(df, signals=df[s["signal"]], config=config)
-    print(metrics)
+    signals = pd.Series(0, index=rsi.index, name="signal")
+    signals[rsi < 30] = 1
+    signals[rsi > 70] = -1
 
-if __name__ == "__main__":
-    run_strategy()
+    return pd.DataFrame({"price": prices, "rsi": rsi, "signal": signals})
+
+
+if __name__ == "__main__":  # pragma: no cover
+    result = run_strategy()
+    print(result.tail())

@@ -1,15 +1,31 @@
-import yol
-import pathlib as path
+"""Persist and restore pipeline snapshots for quick debugging."""
 
-DEFAULT_PACK="packs/run_last"
+from __future__ import annotations
 
-def save_snapshot(data, config):
-    path = path.Path(DEFAULT_PACK)
-    path.["config.yaml"].write_text(config)
-    data['results'].to_csv(path["results.csv"])
+from pathlib import Path
+from typing import Any, Dict
 
-def load_snapshot():
-    path = path.Path(DEFAULT_PACK)
-    res = pyol.load_file(path["result.csv"])
-    res[value] = float(res[value])
-    return res}
+import pandas as pd
+import yaml
+
+DEFAULT_PACK = Path("packs/run_last")
+
+
+def save_snapshot(data: Dict[str, Any], config: Dict[str, Any], directory: Path = DEFAULT_PACK) -> None:
+    directory.mkdir(parents=True, exist_ok=True)
+
+    (directory / "config.yaml").write_text(yaml.safe_dump(config), encoding="utf-8")
+
+    results = pd.DataFrame(data.get("results", []))
+    results.to_csv(directory / "results.csv", index=False)
+
+
+def load_snapshot(directory: Path = DEFAULT_PACK) -> Dict[str, Any]:
+    if not directory.exists():
+        raise FileNotFoundError(f"Snapshot directory not found: {directory!s}")
+
+    config = yaml.safe_load((directory / "config.yaml").read_text(encoding="utf-8"))
+    results_path = directory / "results.csv"
+    results = pd.read_csv(results_path) if results_path.exists() else pd.DataFrame()
+
+    return {"config": config, "results": results}
