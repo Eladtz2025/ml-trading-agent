@@ -23,11 +23,14 @@ jobs:
 
       - name: Install tools
         run: |
-          pip install --upgrade ruff
+          pip install ruff black isort
           npm install -g markdownlint-cli
 
       - name: Auto-fix Python
-        run: ruff check . --fix --unsafe-fixes
+        run: |
+          ruff check --fix --unsafe-fixes .
+          black .
+          isort .
 
       - name: Auto-fix Markdown
         run: markdownlint --fix '**/*.md'
