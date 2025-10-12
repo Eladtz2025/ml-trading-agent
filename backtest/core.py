@@ -1,5 +1,3 @@
-import pandas as pd
-
 def simple_backtest(df, signal_col='signal', cost=0.001):
     df = df.copy()
     df['position'] = df[signal_col].shift().fillna(0)
