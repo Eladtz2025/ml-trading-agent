@@ -1,29 +1,27 @@
-
-name: Validate Uploaded Python Files
+name: Validate Uploaded Files
 
 on:
   push:
-    paths:
-      - '**.py'
+    branches: [main]
 
-jo`s:
+jobs:
   validate:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - uses: actions/checkout@v3
- 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
-
       - name: Install dependencies
         run: |
           python -m pip install -u pip
-          pip install ruff mypy
-
-      - name: Ruff lint
-        run: ruff .
-
-      - name: Mypy check
-        run: mypy .
+          pip install ruff mypy pyamllint json
+      - name: Validate Python Files
+        run: ruff . && mypy .
+      - name: Validate YAML Files
+        run: yamllint .
+      - name: Validate JSON Files
+        run: jsonlnt *.json
+      - name: Validate Markdown Files
+        run: echo "Markdown check not implemented yet."
