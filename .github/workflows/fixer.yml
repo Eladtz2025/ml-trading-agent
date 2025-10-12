@@ -23,13 +23,11 @@ jobs:
 
       - name: Install tools
         run: |
-          pip install ruff
+          pip install --upgrade ruff
           npm install -g markdownlint-cli
 
       - name: Auto-fix Python
-        run: ruff check --fix .
+        run: ruff check . --fix --unsafe-fixes
 
       - name: Auto-fix Markdown
         run: markdownlint --fix '**/*.md'
-
-      # תוכל להוסיף כאן דברים נוספים כמו פורמט ל־JSON, YAML וכו'
