@@ -1,46 +1,43 @@
-+"""Volume Weighted Average Price feature."""
-+
-+from __future__ import annotations
-+
- import pandas as pd
- 
--def compute_vwap(df):
--    """
--    Compute cumulative Vwap: close weighted by volume
--     df must contain 'Close', 'Volume'
--    vp = (df.Close * df.Volume).cumsum()
--    cumv_vol = df.Volume.cumsum()
--    return vp/ cumv_vol
--
--# if __name__ == '__main__':
--    import pdf
--    df = pdf.read_parquet('cache/data/spy.parquet')
--    print(compute_wvap(df).tail())
-\ No newline at end of file
-+
-+def compute_vwap(df: pd.DataFrame) -> pd.Series:
-+    """Compute the cumulative VWAP for a dataframe."""
-+    columns = {col.lower(): col for col in df.columns}
-+    try:
-+        close_col = columns["close"]
-+        volume_col = columns["volume"]
-+    except KeyError as exc:
-+        raise KeyError("Dataframe must contain 'Close' and 'Volume' columns") from exc
-+
-+    value = (df[close_col] * df[volume_col]).cumsum()
-+    volume = df[volume_col].cumsum()
-+    vwap = (value / volume).rename("vwap")
-+    return vwap
-+
-+
-+if __name__ == "__main__":  # pragma: no cover - quick check helper
-+    df = pd.DataFrame(
-+        {
-+            "Close": [100, 102, 101, 103],
-+            "Volume": [200, 180, 220, 210],
-+        }
-+    )
-+    print(compute_vwap(df))
- 
-EOF
-)
+"""Utilities for computing simple market regimes."""
+
+from __future__ import annotations
+
+import warnings
+
+import pandas as pd
+from sklearn.cluster import KMeans
+
+DEFAULT_N_REGIMES = 3
+
+
+def compute_regime(df: pd.DataFrame, n_regimes: int = DEFAULT_N_REGIMES) -> pd.Series:
+    """Cluster log returns into discrete regimes."""
+
+    if n_regimes <= 0:
+        raise ValueError("n_regimes must be positive")
+
+    if "close" in df.columns:
+        close = df["close"]
+    elif "Close" in df.columns:
+        close = df["Close"]
+    else:
+        raise KeyError("DataFrame must contain a 'close' column")
+
+    returns = close.pct_change().fillna(0).to_frame("returns")
+
+    if len(returns) < n_regimes:
+        warnings.warn(
+            "Not enough samples to compute regimes; returning zeros.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+        return pd.Series(0, index=returns.index, name="regime")
+
+    model = KMeans(n_clusters=n_regimes, random_state=42, n_init=10)
+    labels = model.fit_predict(returns)
+    return pd.Series(labels, index=returns.index, name="regime")
+
+
+if __name__ == "__main__":
+    data = pd.DataFrame({"close": [100, 101, 102, 101, 99, 100]})
+    print(compute_regime(data).value_counts())
