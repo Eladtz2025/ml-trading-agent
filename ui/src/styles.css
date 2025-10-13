@@ -12,6 +12,7 @@
   --accent-soft: rgba(124, 92, 255, 0.16);
   --accent-strong: rgba(124, 92, 255, 0.32);
   --success: #48e9a6;
+  --danger: #ff6b6b;
   --muted: rgba(255, 255, 255, 0.12);
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
@@ -234,6 +235,25 @@ main {
   color: var(--success);
   font-size: 0.75rem;
   letter-spacing: 0.02em;
+}
+
+.component-status--error {
+  color: var(--danger);
+}
+
+.component-status__artifacts {
+  margin: 0.5rem 0 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.25rem;
+  color: var(--text-secondary);
+}
+
+.component-status__artifacts code {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.7rem;
 }
 
 .component-card--chart {
