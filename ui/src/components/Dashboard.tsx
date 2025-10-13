@@ -20,45 +20,85 @@ const kindToLabel: KindLabelMap = {
 };
 
 const Dashboard: React.FC = () => {
-  const [actionStatus, setActionStatus] = React.useState<
-    Record<string, 'idle' | 'launching' | 'complete'>
-  >({});
+  type ComponentActionState = {
+    status: 'idle' | 'launching' | 'complete' | 'error';
+    message?: string;
+    artifacts?: string[];
+  };
 
-  const handleComponentAction = (component: DashboardComponent) => {
-    if (!component.cta) {
-      return;
-    }
+  const [actionStatus, setActionStatus] = React.useState<Record<string, ComponentActionState>>({});
 
-    if (component.cta.type === 'vercel') {
-      setActionStatus((prev) => ({ ...prev, [component.id]: 'launching' }));
+  const updateStatus = React.useCallback(
+    (componentId: string, state: ComponentActionState) => {
+      setActionStatus((prev) => ({ ...prev, [componentId]: state }));
+    },
+    []
+  );
+
+  const handleComponentAction = async (component: DashboardComponent) => {
+    const actionType = component.cta?.type ?? 'action';
+
+    if (actionType === 'vercel') {
+      updateStatus(component.id, { status: 'launching' });
 
       if (typeof window !== 'undefined') {
-        const href = component.cta.href ?? 'https://vercel.com/new';
+        const href = component.cta?.href ?? 'https://vercel.com/new';
         const openWindow = () => {
           const newWindow = window.open(href, '_blank', 'noopener,noreferrer');
           setTimeout(() => {
-            setActionStatus((prev) => ({
-              ...prev,
-              [component.id]: newWindow ? 'complete' : 'idle'
-            }));
+            updateStatus(component.id, {
+              status: newWindow ? 'complete' : 'idle',
+              message: newWindow ? 'Deployment flow opened in a new tab.' : undefined
+            });
           }, 300);
         };
 
         try {
           openWindow();
         } catch (error) {
-          setActionStatus((prev) => ({ ...prev, [component.id]: 'idle' }));
+          updateStatus(component.id, { status: 'idle' });
           console.error('Failed to open Vercel deployment window', error);
         }
       } else {
-        setActionStatus((prev) => ({ ...prev, [component.id]: 'idle' }));
+        updateStatus(component.id, { status: 'idle' });
       }
 
       return;
     }
 
-    if (component.cta.href && typeof window !== 'undefined') {
-      window.open(component.cta.href, component.cta.target ?? '_self', 'noopener,noreferrer');
+    if (actionType === 'link') {
+      if (component.cta?.href && typeof window !== 'undefined') {
+        window.open(component.cta.href, component.cta.target ?? '_self', 'noopener,noreferrer');
+      }
+      return;
+    }
+
+    try {
+      updateStatus(component.id, { status: 'launching' });
+      const response = await fetch(`/api/actions/${component.id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({})
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.text();
+        throw new Error(errorBody || 'Failed to trigger action');
+      }
+
+      const payload = (await response.json()) as {
+        message?: string;
+        artifacts?: string[];
+      };
+
+      updateStatus(component.id, {
+        status: 'complete',
+        message: payload.message ?? 'Action completed successfully.',
+        artifacts: payload.artifacts ?? []
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Action failed to execute.';
+      updateStatus(component.id, { status: 'error', message });
     }
   };
 
@@ -95,9 +135,9 @@ const Dashboard: React.FC = () => {
               {section.components.map((componentId) => {
                 const component = getComponentDetails(componentId);
                 const kindLabel = kindToLabel[component.kind] ?? 'Component';
-                const status = actionStatus[component.id] ?? 'idle';
-                const actionLabel = component.cta?.label ?? `Open ${component.title}`;
-                const isActionDisabled = component.cta?.type === 'vercel' && status === 'launching';
+                const status = actionStatus[component.id] ?? { status: 'idle' };
+                const actionLabel = component.cta?.label ?? `Trigger ${component.title}`;
+                const isActionDisabled = status.status === 'launching';
 
                 return (
                   <article key={component.id} className={`component-card component-card--${component.kind}`}>
@@ -115,11 +155,25 @@ const Dashboard: React.FC = () => {
                         aria-busy={isActionDisabled}
                         aria-label={actionLabel}
                       >
-                        {status === 'launching' ? 'Opening…' : actionLabel}
+                        {status.status === 'launching' ? 'Working…' : actionLabel}
                       </button>
-                      {component.cta?.type === 'vercel' && status === 'complete' && (
-                        <p className="component-status" role="status">
-                          Deployment flow opened in a new tab. Complete the steps in Vercel to finish deploying.
+                      {status.status === 'complete' && (
+                        <div className="component-status" role="status">
+                          <p>{status.message}</p>
+                          {status.artifacts && status.artifacts.length > 0 && (
+                            <ul className="component-status__artifacts">
+                              {status.artifacts.map((artifact) => (
+                                <li key={artifact}>
+                                  <code>{artifact}</code>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      )}
+                      {status.status === 'error' && (
+                        <p className="component-status component-status--error" role="status">
+                          {status.message}
                         </p>
                       )}
                     </footer>
