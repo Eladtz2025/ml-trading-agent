@@ -8,4 +8,6 @@ agent = PhoenixAgent()
 async def ask_agent(request: Request):
     data = await request.json()
     query = data.get(\"query\", \"\")
+    response = agent.process(query)
+    return {"response": response}
     return {"response": agent.process(query)}
