@@ -1,79 +1,31 @@
-Absolutely. Here's the **full action plan in English** for transforming your dashboard into a live, interactive AI-driven interface:
-
----
-
-## ✅ Phase 1: Replace Static Agent with a Live Backend
-
-### 🧠 Create a Real Agent Class
-
-**File:** `agent/phoenix_agent.py`
-**Responsibilities:**
-
-* Load decision logs from `decisions/`, `monitor/`, and `risk/`
-* Use context from the current portfolio (e.g., `live/`)
-* Clean and summarize insights
-* Respond in natural language with justifications
-
-**Sample API:**
-
-```python
-@app.post("/agent/ask")
-def agent_ask(query: str):
-    response = agent.process(query)
-    return {"response": response}
-```
-
----
-
-## ✅ Phase 2: Connect UI to Backend Agent
-
-### React Frontend (Vite)
-
-* `src/components/AgentChat.tsx` – input + live conversation stream
-* `src/hooks/useAgentChat.ts` – fetches from `/agent/ask`
-* Handles user input, loading state, and agent response display
-
-### Python Backend (FastAPI or similar)
-
-* Exposes `/agent/ask` route
-* Accepts a query + optional context (portfolio, market state, date)
-* Returns structured JSON with text and data summaries
-
----
-
-## ✅ Phase 3: Explain Model Decisions in Human Terms
-
-The agent will output:
-
-* ❓ Question asked by the user
-* 📊 Data retrieved (metrics, model outputs, actions)
-* 💡 Explanation:
-
-  > “I chose strategy X because model confidence increased from 0.65 to 0.92, and risk (via Kelly) dropped by 27%.”
-
----
-
-## ✅ Phase 4: Integrate with Real Decision Logs
-
-* Reads from `decisions/*.md`, `log.py`, `drift_log.json`
-* Explains past or upcoming actions:
-
-  > “I bought AAPL because SHAP scores favored it after volatility dropped.”
-
----
-
-## 🧪 QA and Validation
-
-* Agent always responds (fallback message if no data)
-* Context is always fresh (date, live PnL, open positions)
-* UI interaction flows without reloads (chat-style)
-
----
-
-Ready for the first branch:
-
-* Add `phoenix_agent.py`
-* Add `/agent/ask` API
-* Add basic `AgentChat.tsx` UI component
-
-Shall I proceed to create the GitHub branch and PR?
+System Dashboard:
+  Overview:
+    status: complete
+    - "Equity Curve"
+    - "Daily P.N L"
+    - "Sharpe Metrics"
+    - "Exposure Map"  
+  Model Insights:
+    status: complete
+    - "SHAP visualization"
+    - "actual return link of features"
+  Backtest/Live Run:
+    status: partial
+    - "Top Frequency Returns"
+    - "Inflection Points"
+  Risk Monitor:
+    status: partial
+    - "Alert Rules"
+    - "Average Exposure"
+  Data & Label QA:
+    status: partial
+    - "Confid Validation"
+    - "Label Version"
+  Config & Ops:
+    status: partial
+    - "Config Files"
+    - "OntoLog Links"
+  Phoenix Agent:
+    status: partial
+    - "Global Lifecycle"
+    - "Report Status (LIVE, PAPER)"
