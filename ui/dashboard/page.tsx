@@ -1,4 +1,5 @@
 import AgentChat from "./components/AgentChat";
+import DecisionList from "./components/DecisionList";
 import { classNames } from "clsx";
 
 export default function DashboardPage() {
@@ -8,12 +9,7 @@ export default function DashboardPage() {
         <h2 className="text-lg">Phoenix Agent Chat</h2>
         <AgentChat />
       </div>
-      <div className="pt-4">
-        <h3 className="text-md text-muted">Recent Decisions: {{fetch from context}}</h3>
-        <ul className="list-disc">
-          <li>Entry Example</li>
-        </ul>
-      </div>
+      <DecisionList />
     </div>
   );
 }
