@@ -15,6 +15,6 @@ class PhoenixAgent:
             expl += " Top feature: RSI."
             return expl
         elif "pnl" in query.lower():
-            return f@"Current PnL is {(context['portfolio']['pnl')}"
+            return f"Current PnL is {context['portfolio']['pnl']}"
         else:
             return "I'm ready. Ask me about recent decisions or performance."
