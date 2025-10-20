@@ -4,9 +4,9 @@ from agent.phoenix_agent import PhoenixAgent
 router = APIRouter()
 agent = PhoenixAgent()
 
-@router.post(\"/agent/ask\")
+@router.post("/agent/ask")
 async def ask_agent(request: Request):
     data = await request.json()
-    query = data.get(\"query\", \"\")
+    query = data.get("query", "")
     response = agent.process(query)
     return {"response": response}
